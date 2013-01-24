@@ -1,4 +1,5 @@
-\documentclass[12pt,twoside,abbrevs,bsc,logo,notimes,deptreport]{styles/infthesis}
+%\documentclass[12pt,twoside,abbrevs,bsc,logo,notimes,deptreport]{styles/cs4rep}
+\documentclass[parskip]{styles/cs4rep}
 
 % Packages
 \usepackage{graphicx}
@@ -6,52 +7,61 @@
 \usepackage{acronym}
 \usepackage{minted}
 \usepackage{multirow}
+\usepackage{hyperref}
+\usepackage[backend=biber,sorting=none]{biblatex}
+
+\addbibresource{refs/bibliography.bib}
 
 \renewcommand\theFancyVerbLine{\normalsize\arabic{FancyVerbLine}}
 
+\begin{document}
+
 % Project Details
-\title{Database Access using a Filesystem}
-\author{Christopher Brown}
-\course{Computer Science}
+\title{Crowdsourcing Usability Testing for Mobile Apps}
+\author{Ben Kay}
+\degree{Artificial Intelligence and Computer Science}
 \project{4th Year Project Report}
 
-\submityear{2012}
-\graduationdate{June 2012}
+%\submityear{2013}
+%\graduationdate{June 2013}
 \date{\today}
 
-\input{sections/misc/acronyms}
-\input{sections/misc/abstract}
+%\input{sections/misc/acronyms}
+%\input{sections/misc/abstract}
 
 % Extra Package Commands
 
-\begin{document}
-  \begin{preliminary}
+%  \begin{preliminary}
     % Title Page
     \maketitle
 
     % Preamble
-    \input{sections/misc/acknowledgements}
-    \standarddeclaration
+%    \input{sections/misc/acknowledgements}
+%    \standarddeclaration
     %\input{sections/misc/dedication}
     \tableofcontents
-    \listoffigures
-  \end{preliminary}
+%    \listoffigures
+%  \end{preliminary}
 
   % Chapters
-  \input{sections/intro}
-  \input{sections/prior}
-  \input{sections/formulation}
-  \input{sections/design}
-  \input{sections/implementation}
-  \input{sections/evaluation}
-  \input{sections/conclusion}
+  \input{interim}
+  
+%  \input{sections/intro}
+%  \input{sections/prior}
+%  \input{sections/formulation}
+%  \input{sections/design}
+%  \input{sections/implementation}
+%  \input{sections/evaluation}
+%  \input{sections/conclusion}
 
   % Appendix
-  \appendix
+%  \appendix
 
-  \input{sections/appendix/evaluation.tex}
+%  \input{sections/appendix/evaluation.tex}
 
   % Bibliography
-  \bibliography{/Users/cb/Documents/Project}{}
-  \bibliographystyle{unsrt}
+%  \bibliography{/Users/cb/Documents/Project}{}
+%  \bibliographystyle{unsrt}
+  \printbibliography
+  
 \end{document}
