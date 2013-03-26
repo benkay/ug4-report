@@ -7,12 +7,16 @@
 \usepackage{acronym}
 \usepackage{minted}
 \usepackage{multirow}
-\usepackage{hyperref}
 \usepackage[backend=biber,sorting=none]{biblatex}
+\usepackage{todonotes}
+\usepackage{setspace}
+\usepackage[breaklinks]{hyperref}
 
 \addbibresource{refs/bibliography.bib}
 
 \renewcommand\theFancyVerbLine{\normalsize\arabic{FancyVerbLine}}
+
+\onehalfspacing
 
 \begin{document}
 
@@ -43,25 +47,21 @@
 %    \listoffigures
 %  \end{preliminary}
 
-  % Chapters
-  \input{interim}
-  
-%  \input{sections/intro}
-%  \input{sections/prior}
-%  \input{sections/formulation}
-%  \input{sections/design}
-%  \input{sections/implementation}
-%  \input{sections/evaluation}
-%  \input{sections/conclusion}
+  % Chapters 
+  \input{sections/intro}
+  \input{sections/prior}
+  \input{sections/formulation}
+  \input{sections/design}
+  \input{sections/implementation}
+  \input{sections/evaluation}
+  \input{sections/conclusion}
 
   % Appendix
-%  \appendix
+  \appendix
 
-%  \input{sections/appendix/evaluation.tex}
+  \input{sections/appendix/evaluation}
 
   % Bibliography
-%  \bibliography{/Users/cb/Documents/Project}{}
-%  \bibliographystyle{unsrt}
   \printbibliography
   
 \end{document}

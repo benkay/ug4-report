@@ -1,69 +1,33 @@
-\chapter{Prior Work}
+\chapter{Existing Stuff/Prior Work}
 
-There is considerable prior work into both improving the usability of databases
-and into the visualisation of data inside databases. However, not all of this
-work provides practical and usable tools. Rather, it outlines potential ideas
-for them. Other prior work creates powerful and excellent tools for working
-with databases but they require that the user is already knowledgeable in that
-field in order to use them.
+\section{Alternative ways of testing}
 
-\section{General Usability}
+\subsection{Automated Usability Testing}
 
-A number of the prior papers\cite{Date, Jagadish2007} assert that the usability
-of a database system is just as important as the performance or features. This
-assertion if made based on the fact that the cost of people is far more than
-the cost of machines - now more than ever. The papers define usability as
-raising the level of abstraction of the user interface. This is done in order
-to allow more people to be able to use the software or to help current users
-more easily use the software.
+Heuristic evaluation - requires experts.
 
-The \emph{Database Usability} paper\cite{Date} outlines some plans and ideas
-for improving database usability. For example, text editors, voice inputs and
-outputs, and pictorial interfaces. I don't believe that all of these interfaces
-would be effective or practical. However, the text editor interface is an
-interesting idea and is similar to my project. I also believe that the
-pictorial interface may be something that I can use and implement.
+\todo{Automated usability testing}
 
-The second paper, \emph{Making Database Systems Usable}, notices that improving
-usability is the key to improving user engagement. However, this assertion is
-made after observing the improvements in search engine quality over the past
-few years. It goes on to mention how the problem of querying a database is far
-more complex when applied to databases compared to search engines. Many of the
-current systems require bespoke software to reach the same level of usability.
+Tools such as USEFul \cite{dingli2011useful} \url{http://usabilitygeek.com/useful-a-framework-to-automate-website-usability-evaluation-part-2/}. Automatically compare websites to a database of usability guidelines. Optimised for desktop websites. No such service currently available for native mobile apps.
 
-\section{Improving Existing Solutions}
+\subsection{Analytics}
 
-One of the papers\cite{Stolte2010} claims that databases that are easy-to-use
-generate and improve story-telling, debate, and conversations. Additionally it
-provides an interesting concept. It introduces a more effective query language
-that can be compiled to SQL in order to be compatible with many different
-database systems by speaking their language directly. This solution is similar
-to part of my project that I will discuss later.
+Analytics services have been available since the early days of the web, tracking user visits and behaviour of web sites. As the web evolved and commercial sites appeared, analysis of analytics data became useful in identifying problem areas in the user experience. Some academic work in this area has been done, for example Hasan et al \cite{hasan2009using} explore the use of metrics in Google Analytics to evaluate the usability of e-commerce sites, finding it to be an effective tool for quickly and easily identifying some problem areas.
 
-\section{Different Kinds of Visualisation}
+Analytics services are also widely used in mobile apps in a similar manner to websites. These services are typically used to measure specifics about the userbase of the application, yielding useful data such as user count, frequency of use and user retention, as well as estimates of their geographic distribution and average age/gender. Most services also allow the developer to measure feature usage by measuring predefined ``events'' triggered by a user when they perform an action in the application. For example in a music application, the developer might add an event for the play button. Whenever the user then presses play, an event is sent to a remote server and the developer can view statistics showing, say, the number of people who pressed pay in a single day or the proportion of total users that use the button. By incorporating these events throughout the application, the developer can get a good idea of which parts are heavily used, and what functionality is exerted more rarely. The obvious limitation of this approach is that it is difficult to discern the intent of the user; in most scenarios, the developer cannot distinguish between functionality that is not used because users have no desire to use it, and functionality that is not used because it is not obvious, or has poor usability. The exceptions here are use cases that have a specific workflow, for example a signup form or purchase, where events can be placed at each point of the process and the dropout rate at each stage can be measured.
 
-One method of improving usability is providing different methods of
-visualisation. The rest of the
-papers\cite{Hu2008,Haritsa2010,Yang2010,Jin2010,Chan2009} are introducing
-different kinds of visualisation for databases.
+\section{Crowdsourcing}
 
-\emph{QueryScope}\cite{Hu2008}, \emph{GBLENDER}\cite{Jin2010}, and
-\emph{Picasso}\cite{Haritsa2010} provide a method of visualising the queries
-that are passed to the database. This allows for similar query patterns to be
-identified and, if required, optimised. This is a method of improving usability
-that I did not want to pursue as it does not improve the usability for all
-users of database management systems. This method only improves the usability
-for those that enter queries directly such as database administrators.
+Crowdsourcing has shown to be an effective way of performing repetitive tasks which aren't suitable for computers - i.e. which need to be done by a human. It works by getting many people to perform a small amount of work, the results of which can be combined to form something useful. Perhaps some of the best known examples of applications employing crowdsourcing were created by Luis Von Ahn at Carnegie Mellon University, and include the \emph{ESP Game}, where participants collaborate over the internet to assign machine readable tags to images, to help search results, \emph{reCAPTCHA}, which leverages the popular ``captcha'' method of preventing automated bots from completing web forms to digitize books, and most recently \emph{Duolingo}, a service which aims to teach people new languages while translating web pages.
 
-Other projects\cite{Yang2010,Chan2009} improve the usability of these systems
-by allowing the data in the database to be viewed in different manners. This is
-the type of usability improvement that I am interested in working on as it
-improves the system for all users. One of the systems\cite{Yang2010} allows for
-the generation of various kinds of graphs and visual representations to be
-created from the data. The other solution, \emph{Vispedia}\cite{Chan2009},
-allows for the querying and viewing of semi-structured date in a structured
-way. The example that is given in the paper is \emph{Wikipedia}. Using the
-system they have designed they are able to, for instance, ask for the
-population of Russia and it will look up the information even though the data
-is not strictly structured. This concept is very interesting however I will
-explore a different method in my project.
+Modern software development is moving to a more iterative process with a ``release early, release often'' attitude. This trend is particularly visible in the mobile space, where the major platforms' app stores provide an integrated and efficient delivery mechanism for updates. Combined with modern analytics packages and other user feedback mechanisms such as support emails and reviews this gives developers an opportunity to test their applications' interface and gradually refine the user experience after release.
+
+Indeed when using analytics in an application this already seems like a form of crowdsourcing - the entire userbase of the application is potentially involved in the application's improvement. 
+
+\section{Gamification}
+
+In the crowdsourcing examples given earlier, the ESP game and Duolingo have one thing in common - a way to keep people engaged so they continue using the application. The latter one does this by providing a useful service to the user, and the former by turning the experience into a game.
+
+The process of integrating game oriented features into a non-gaming environment is known as Gamification, a concept that took off in mainstream computing around 2010 \cite{gamification-trends}. It commonly involves adding rewards such as points or other forms of recognition for completing tasks or challenges within the environment.
+
+It is possible that by incorporating ideas from crowdsourcing and gamification, and the techniques already used in mobile analytics, that a system can be created that provides useful feedback about the usability of a mobile application while having less cost and time overheads than traditional usability testing.

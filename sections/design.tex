@@ -1,199 +1,93 @@
 \chapter{Design}
 
-The core problem to solve is finding the best way to capture updates from
-either the database or filesystem and present them on the other. There were two
-main alternative approaches that could be taken in order to create a system
-that would solve this problem.
+For the initial implementation, a single Android app was chosen to test. Despite
+this, the library should be generic enough to easily integrate into any Android
+application.
 
-The first approach is the most straightforward and requires a program to be
-watching the database and filesystem for changes. Once a change is detected it
-would then be mirrored by applying the corresponding changes in the opposite
-system. For example, if a file was created on the filesystem a record would be
-created in the database.
+There are two core problems to solve. One is finding the best way to capture
+enough data from many users' interactions with the application and present it in
+a way that will highlight issues in the user interface. The second is keeping
+the participants engaged long enough to complete the testing, while using still
+the application in a natural way.
 
-The second approach is more complicated than the first but implements a similar
-idea. Instead of creating a program which monitors the standard filesystem for
-changes. A filesystem is created that can be mounted on the users system and
-provides live updates of any changes through a system of callbacks.
+Due to the crowdsourced nature of the system, and the fact that no member of the
+development team will be present during the testing, the ``think aloud'' aspect
+of traditional testing will be missing. It would, of course, be possible to
+record the subject speaking as they navigate the application, but it would not
+be feasible to collect and aggregate that data automatically from many
+participants. Otherwise, the system will incorporate the same ideas as
+traditional usability testing.
 
-An example of operations and their corresponding action in the other system is
-shown in table \ref{tbl:mappings}.
+\section{User Facing Design}
 
-\begin{table}
-	\centering
-	\begin{tabular}{|l|l|}
-		\hline
-		\textbf{Filesystem Action} & \textbf{Database Action} \\
-		\hline
-		Add a file & Create a record \\
-		Remove a file & Delete a record \\
-		Modify a file & Change a record \\
-		Rename a directory & Rename a table \\
-		\hline
-	\end{tabular}
-	\caption{Filesystem to/from Database Mappings}
-	\label{tbl:mappings}
-\end{table}
+On starting the testing, the user is shown a screen explaining how the testing
+will work. They are then presented with a scenario/task for them to complete. On
+completion of the task, they will be either given a successive task, or a screen
+thanking them for participating. Since multiple tasks would usually be presented to the user in a normal testing session, the developer is able to group tasks together to be performed successively. They are also able to control whether a task follows on from the previous one, or whether they all begin from a common screen. This will be useful for most tasks, where, for example, the developer wants the user to start from a specific screen such as the home screen of the application.
 
-\section{Polling or Filesystem?}
+\subsection{Early Versions and Gamification}
 
-\subsection{Polling}
-
-The polling system, as outlined above, would be run at regular intervals to
-give the illusion that both systems were directly linked. There are numerous
-challenges with this implementation with the most prominent being detecting the
-changes made on each side. Triggers that will execute when changes are made or
-streaming logs of all changes can be used to monitor for changes in a database.
-However, not all database management systems have support for these features.
-
-Waiting for changes in a filesystem is possible simply by scanning over the
-filesystem for any modification dates that have changed since the last scan was
-performed. However, this syster is very ``brute force'' and may be slow on
-systems with many files. To improve upon this method operating system APIs can
-be used that allow us to register for callbacks when files are changed. The
-libraries to perform these tasks are \texttt{inotify} for Linux and
-\texttt{fs-events} for Mac OS X.
-
-This is a less than ideal solution for checking for updates when there may be
-millions of records and therefore millions files that need scanning. This
-solution just does not scale well even with the operating system assistance.
-Additionally, the constant polling of the filesystem is a lot of wasted work
-that will deplete the battery of laptops unnecessarily and waste power on
-desktop machines. Instead, the problem can be flipped around and instead of
-looking for the files that have been changed, any changed file can tell us
-about the modifications that have been performed upon it.
-
-\subsection{Filesystem}
-
-By using a filesystem instead of an separate polling program the feedback loop
-is tightened from changes to the files to the database. By doing this
-potentially expensive operations are avoided when scanning the filesystem for
-changes and have direct callbacks that reference the exact file changed. This
-has the additional advantage of automatically handling migrating any changes
-back from the database to the filesystem just by refreshing the current view.
-
-\section{Scaling Issues}
-
-There is some concern about how this system scale up to the sizes that some
-databases can and will reach. This is due to some unknowns as to how
-a filesystem will perform once it has millions of files in it with each file
-representing a record in the database. In order to mitigate this problem (if it
-does exist) the files should be nested more deeply in a tree structure in order
-to reduce the number of files in a directory down to reasonable levels.
-
-Since users rightly demand that a filesystem is responsive at all times then
-a non-functional requirement should be made that the database returns all
-queries as quickly as reasonably possible. There are numerous ways that this
-could be achieved such as the simple caching of values outside the database in
-memory all the way up to using previous usage patterns to scan across the data
-on the disk in order to load it into memory before the query is ever made and
-creating useful indexes automatically to help regularly slow queries. However,
-it is unwise to spend unnecessary time considering solutions to problems that
-may not occur.
-
-\section{The Querying Problem}
-\label{sec:queryproblem}
-
-A database has 4 main duties when it comes to presenting the user with data:
-adding, updating, deleting, and updating. Our current solution to the problem
-provides a good solution to adding, updating, and deleting records but querying
-the database beyond basic operations is not easy to do with the limited actions
-available to the filesystem. When querying or searching a filesystem, one would
-normally use commands such as \texttt{find} or \texttt{grep}. These commands
-take far too long to provide the desired results when presented with this many
-files. Additionally, they are also not set up to use the information that
-a database can provide when querying such as having ordering defined on
-records.
-
-In order to allow the user to perform more complex queries on the database
-a separate application is needed. However it is critical that still presents
-the database as a filesystem. When looking at how users perform complex
-sequences of operations on a filesystem: there are two different approaches
-depending on the level of expertise of the user.
-
-\subsection{Mirroring Filesystem Solutions}
-
-If there is a task that a user requires to be performed such as resizing all of
-the images in a folder that were taken in the last week and which have the word
-``flower'' in the filename then depending on the level of expertise of the user
-they will probably approach this problem in two different ways.
-
-A technical user will could write a shell script or use multiple commands
-piped together to achieve the intended effect. A command such as the following
-will perform the task shown in figure \ref{fig:shell}.
+In an attempt to keep the user being tested engaged, and thus increasing the likelihood they would complete more of the testing, a game aspect of the framework was considered. In early
+iterations the participant could score points by completing tasks. During a task an overlay would show how long the user is taking (\emph{Figure~\ref{fig:initial-overlay}}) and on completion of the task
+they would be assigned a number of points relative to how quickly they did it.
+Early evaluation of this prototype highlighted a couple of concerns with this approach. Firstly, showing the user how
+long they are taking and encouraging them to complete the task as quickly as
+possible could cause the participant to focus on the on screen timer instead of other elements of the interface, resulting in behaviour that did not necessarily match real world usage.
+Additionally, the point system did not seem to work as hoped, missing crucial aspects that usually make point systems encouraging.  Since the "game" was not really repeatable, and points were not ranked against any other player or used for any other purpose, participants did not see the point (HA I AM SO FUNNY) in gathering them. 
 
 \begin{figure}[ht!]
-  \centering
-	\begin{verbatim}
-	  find . -type f -name ".jpg" |
-	    grep "flower" |
-	    xargs convert -resize 50%
-	\end{verbatim}
-  \caption{Shell Workflow}
-  \label{fig:shell}
+  \centering \includegraphics[width=0.5\textwidth]{images/time-taken}
+  \caption{The task overlay in early iterations of the project.}
+  \label{fig:initial-overlay}
 \end{figure}
 
-Instead of performing the action in one step the user splits up the command
-into 3 logical steps of find the pictures, filter the ones with flower in the
-name, and finally perform the resizing. There is a flow of data through the
-series of commands that are used.
+\todo{Work out what I'm actually doing}
+In the current iteration, the thank you screen will also show the user's
+``tester rank'', which will depend on the amount of testing that they have
+completed compared with the number of tasks/sequences of tasks that are
+available within the application. This ranking will encourage the user to
+continue participating in the testing, and also allows for rewards (such as
+unlocking easter eggs or additional features within the app) if the developer
+wishes to include them.
 
-A non-technical user has a number of available operations to them. The most
-widely used among Macintosh users is probably a program named \emph{Automator}
-which is bundled with the operating system and integrates well with it. It
-allows the user to create a similar workflow to shell scripts by composing
-a sequence of similar duties to the programs above. An example of an
-\emph{Automator} workflow is shown in figure~\ref{fig:automator}. This workflow
-performs the same task as described above.
+\subsection{In-task UI}
 
-\begin{figure}[ht!]
-  \centering
-  \includegraphics[width=0.9\textwidth]{images/automator}
-  \caption{Automator Workflow}
-  \label{fig:automator}
+\emph{Figure \ref{fig:initial-overlay}} also shows how the early version of the in-task UI was an overlay over the application interface. While this was semi-transparent, it still had a tendency to obscure important controls, making it harder to use the application. This was refined after the initial evaluation so it no longer obscures content while still displaying important information about the task. The final UI can be seen in \emph{Figure \ref{fig:final-task-overlay}}. While placing an extra piece of interface at the top of the screen will affect the height available to the application, this should not matter since android apps must adapt to different screen sizes anyway, and the space taken up is designed to be as small as possible. Using this design also enables controls to be placed in the in-task UI, here used for an "Abandon" button.
+
+\begin{figure}
+  \missingfigure{Show the new in-task UI}
+  \label{fig:final-task-overlay}
 \end{figure}
 
-This existing solution and paradigm can be taken and applied to the database
-querying problem. This will work especially well if the records maintain their
-file-like qualities even inside the application. In order to convert this graph
-of command into a database action \ac{SQL} needs to be generated which will
-perform the desired action. This is the next design challenge.
+\subsection{Abandoning Tasks}
 
-\subsection{Creating SQL}
+It's likely that for some tasks, a participant might get stuck, and not be able
+to complete it. In these cases it seems unfair to penalise them, since the
+interface could be too unintuitive or confusing. Worse, this is usually the case
+where the developer could benefit most from the feedback, and if the participant
+were penalised it could discourage them from continuing with the testing. To
+combat this, as part of the overlay that appears while performing a task a
+button allows the participant to abandon the current task at any point. This allows the participant to easily continue the testing, and if many people abandon the same task provides a quick indication of tasks that may be especially difficult to complete.
 
-The task of creating \ac{SQL} has been solved many different times when
-creating \acp{ORM}. These often use Relational Algebra or something similar to
-represent the compound operators before being converted to a sensible SQL
-statement. Using a similar approach for this task would be sensible as it
-mimics the graph structure that is described above. For example, a filter node
-in the application above is equivalent to a selection wrapping everything above
-it in the graph.
+\section{Developer feedback}
 
-This intermediate relational algebra representation also has the advantage of
-completing the metaphor above by replacing the more technical users requirement
-of being able to drop down to a more direct interface to controlling the
-database.
+To be an effective form of feedback, the system also needs a way for the developer to view the data gathered and identify issues.
 
-To this end I'm going to create an intermediate language that allows the user
-to create complex \ac{SQL} queries by writing relational algebra in an
-imperative style. This can then be combined with the filesystem by allowing
-these files to be saved on it and having it return the results.
+There are a few important considerations that need to be made when designing this:
 
-\subsection{Querying the Filesystem}
+\begin{itemize}
+  \item The developer should be able to see as much of the data gathered as possible.
+  \item The aggregate performances of many users are far more important than the performance of individual users.
+  \item Problem areas within a task should be easy to spot.
+  \item Even bigger issues such as tasks that are commonly abandoned should be easy to spot.
+\end{itemize}
 
-While more advanced users may be able to write the intermediate language
-directly in order to query the database there needs to be a program to help the
-majority of users to be able to use the system. The example used above
-(\emph{Automator}) allows the users to create a simple flow of data through
-different applications and services. A similar pattern can be seen that can be
-used to query databases by having the user create a flow that is similar to the
-query graph that will be used inside the database. The graph that the user
-creates can then be traversed in order to generate the language described
-above.
+Some of these criteria are satisfied easily, for example by highlighting tasks with a success rate lower than a certain percentage. To provide a better insight into how people actually attempt to perform a task an interface was developed to show participants navigations through the app during a task (\emph{Figure \ref{fig:task-navigation}}. This interface shows a tree-style view of all the paths that participants took before either completing or abandoning a task. Each branch shows the percentage of users that took that path, allowing the developer can view the most common decisions that users made, and whether they match up to the behaviour that the developer expects.   
 
-Once the user has created the graph they are able to save it to a file. It was
-key in this design that the user was still only using the filesystem to interact
-with the database and not communicate with it directly. This is acomplished by
-having a directory in the filesystem that when the output files are saved
-inside this directory they are automatically executed and the results are
-presented to the user.
+\begin{figure}
+ \missingfigure{Task navigation tree}
+ \label{fig:task-navigation}
+\end{figure}
+
+
+

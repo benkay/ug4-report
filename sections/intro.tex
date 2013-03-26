@@ -1,31 +1,49 @@
 \chapter{Introduction}
 
-Databases are used at the core of nearly all enterprise software, most popular
-websites and many common desktop applications and yet they are always hidden
-behind layers of expensive, time consuming interface design and bespoke
-software. Database systems are often avoided by even technical users, such as
-developers, who will not use them directly instead preferring to use
-technologies such as \acp{ORM} (Hibernate, ActiveRecord, etc.) or alternate,
-more user-friendly, query languages than \ac{SQL} such as \ac{HQL}. If
-technical users are avoiding databases then non-technical users, who may not be
-aware of their widespread existence, have an even smaller chance of being able
-to use them.
+Usability and user experience are major concerns in modern application
+development. With the proliferation of mobile devices and the explosion in the
+app market this has become an even bigger focus for developers as they strive to
+out compete others with polished and intuitive apps that explore new user
+interface (UI) paradigms suited to touch and smaller form factors.
 
-The databases query language of choice, \ac{SQL}, is an complex language that
-is useful for lower level usage such as debugging a particular query or the
-study of databases. Not helping this matter are the many different dialects
-that each \ac{DBMS} requires that the user conforms to. This being one of the
-reasons that \acp{ORM} are used so widely.
+Despite the simpler functionality that mobile apps tend to have compared to
+their desktop counterparts, creating an interface that is obvious to a newcomer
+to the application can still be a challenge. This is made worse by the relative
+recency and pace of evolution of mobile devices meaning that UI conventions are
+still in flux, and the limited screen real estate available on many devices.
 
-\ac{SQL} is not suitable for non-technical users to perform any common tasks.
-There is a need for tools that help all users easily interact with databases.
-While there are already tools that provide a front end to help more technical
-users manipulate them at a lower level these tools require the user to have an
-understanding of some core database concepts such as the difference between
-a table and a view or when to create an index in order to maintain maximum
-performance from the database.
+This situation is not helped by the fact that testing the usability of an application's interface is usually one of the most time
+consuming and resource intensive parts of the testing process. Most other
+aspects of testing, such as unit tests and integration tests can easily be, and are commonly, automated and run without any
+interaction from a human, since they are testing the correctness of the code in
+the application. Even coverage testing, which stresses the interface of the application, is run without intervention by
+either following a predefined model of interaction, or randomly tapping areas of
+the UI for a period of time looking for unexpected ways to crash the
+application. On the Android platform alone, there exist a number of existing tools which can be used to
+accomplish this, for example the Robotium \cite{robotium} framework and monkey
+and monkeyrunner \cite{monkeyrunner} applications that ship with the Android
+developer tools. Usability testing on the other hand is not so simple, precisely
+because it is testing how a \emph{human} reacts to the application compared to
+what is expected by the application's developer.
 
-This is not acceptable in the general case. There should be a way of allowing
-any user who is familiar with the basic usage of a computer to be able to
-accomplish a significant proportion of the tasks that the database can help
-with. The aim of this project is to develop a system which is capable of this.
+The most common way of performing usability testing done by application developers is by recruiting participants who are
+unfamiliar with the application being tested and chosen to cover the intended
+target audience as widely as possible. It usually takes place in a controlled
+setting designed to mimic, say, an office or living room, and the participant
+given tasks that are intended to cover the use cases of an application. 
+As an example, if a calendar/organiser application were being tested then the participant might be
+asked to ``enter a reminder about dinner out next friday". While completing the task they are
+told to think aloud about their reasoning behind the actions taken, and how they expect the
+application to behave. This ``Think Aloud" testing method is based on
+work by K. A. Ericsson and H. A. Simon \cite{ericsson1980verbal}. It gives
+information about how the interface matches the participant's thinking, and
+highlights areas that need improvement.
+
+Since it it has such an overhead to set up and perform, individual hobbyist
+developers or even small companies with limited resources might shy away from
+performing usability testing. Even if it is done, it might not be done as
+regularly as might be optimal to catch design faults early in the process.
+
+\todo{Briefly mention automated testing}
+
+\todo{Briefly outline how it could be improved}

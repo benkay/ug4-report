@@ -1,77 +1,15 @@
-\chapter{Formulation of the Problem \& Proposed Solution}
+\chapter{Formulation of the Problem}
 
-\section{Current Solutions}
+Traditional approaches to usability testing are difficult to set up and run, requiring a significant time and cost investment to find participants and involve them in testing. Because of this testing may not involve as many people from enough backgrounds to find all the usability problems in an application. It might also not be performed often enough during development, and small organisations or individuals might shy away from performing any usability testing whatsoever.
 
-In order to make databases easier to use for everyone we must first work out
-why they are difficult to use and how current solutions fall short in the first
-place. We see that most current database front-ends are either custom built or
-ugly general purpose table-styled editors that make any meaningful edits hard
-to comprehend.
+While analytics services can gather large amounts of data from the interaction of users with an application, the lack of structure can make it difficult to draw meaningful conclusions as information about the intent of the user is lost when the data is gathered. Without knowing the intent of users when they are performing tasks, the data gathered cannot reveal where features of an application are used or not used because their usability is poor, or whether they are simply less popular.  
 
-\subsection{Bespoke Software}
+Tasks which always have a specific structured workflow, such as a checkout process, are easier to analyse with existing analytics services, as user intent is clear. By giving the user more structured tasks it should be possible to collect useful data from other parts of a mobile application.
 
-The custom built solutions usually don't look anything like a database
-and often, on the contrary, completely hide the fact that there is
-a database powering them. Web applications such as \emph{Facebook} are
-classic examples of this: behind the scenes there will be databases
-holding and retrieving information but there will never be a single
-mention of a select, join, table, or view on the front end for the user
-to contend with.
-
-There are clear advantages to showing the database in this manner.
-Assuming that the front end is well designed and accessible, any user
-will be able to perform all of the required actions on the stored data.
-This also includes operations that are would be fantastically complex if
-they needed to be typed out as a collection of huge \ac{SQL} statements
-surrounded by a transaction. Instead, they are just a button on a web
-page.
-
-The problem with applying this solution to the database accessibility
-problem is how specific and bespoke it is. We are unable to generalise
-this beyond very simple cases due to the varying scales and types of
-data stored. In addition, these solutions are expensive and time
-consuming to create each time a new schema is used and data to display
-and manipulate.
-
-\subsection{General Purpose Software}
-
-A compromise needs to be found between these two extremes: user-friendly
-but bespoke and hard-to-use but powerful. In order to find this
-compromise I am going to present the user with a new type of view of the
-database that they are already familiar with: a file and directory tree.
-
-This representation makes sense from a familiarity perspective as nearly
-all computer users will have at some point had experience of using
-a file tree. It additionally makes sense when applied to the structure
-of a database too. \acf{DBMS} have a shallow tree structure when
-representing the hierarchy of a server, database, table, and records.
-A file tree is a simple way of displaying this structure that the user
-is familiar with.
-
-A further advantage of using the files and directories representation is
-that it also allows the user to not just manipulate the files and
-directories but also modify their contents. This allows us to present
-the data to the user in a program that they are familiar with such as an
-office package.
+\todo{Keeping people engaged}
 
 \section{Proposed Solution}
 
-A good compromise needs to be found between these two extremes:
-user-friendly but bespoke and hard-to-use but powerful. In order to find
-this compromise I am going to present the user with a new type of view
-of the database that they are already familiar with: a file and
-directory tree.
+By combining some of the methodologies traditionally used in usability testing with analytics, it should be possible to provide a structured environment that can easily be given to people unfamiliar with an application, and to easily gather data which will identify potential problem areas with respect to usability.
 
-This representation makes sense from a familiarity perspective as nearly
-all computer users will have at some point had experience of using
-a file tree. It additionally makes sense when applied to the structure
-of a database too. \acf{DBMS} have a shallow tree structure when
-representing the hierarchy of a server, database, table, and records.
-A file tree is a simple way of displaying this structure that the user
-is familiar with.
-
-A further advantage of using the files and directories representation is
-that it also allows the user to not just manipulate the files and
-directories but also modify their contents. This allows us to present
-the data to the user in a program that they are familiar with such as an
-office package.
+The solution will take the form of a framework that can be easily integrated into any mobile application, with as little modification to the application's code as possible. The developer will define tasks for the user to complete with defined starting points in the app to make aggregation of data easier. Users can then attempt to complete the tasks independently without there needing to be a member of the development team present, as is usual with usability testing, and the results will automatically be uploaded for the developer to view at a later time. By aggregating the data from many tests common problem areas should be able to be identified and investigated further.

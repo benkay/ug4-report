@@ -1,247 +1,48 @@
-\chapter{Evaluation \& Future Work}
+\chapter{Evaluation}
 
-An important stage in developing a user interface (especially one which is
-designed to improve usability) is to evaluate the system with user testing.
-There are three reasons for performing this task: to check whether the software
-actually helped the users, by how much the users were helped and also to see
-how the software could be changed in order to improve its usability.
+To measure the usefulness of this method of testing, a number of aspects of the library were tested and contrasted to other ways of gaining insights into the usability of an Android application.
 
-\section{Methods Used}
+\section{Integration}
 
-\subsection{User Testing}
+\subsection{Creating Tasks}
 
-The users were given a set of tasks to complete (section~\ref{sec:tasks}) and
-a database schema that they should use to perform these tasks
-(section~\ref{sec:schema}). The list of tasks was chosen in order to use as
-many of the features of the application as possible. These tasks were then
-performed on two different database querying applications: one that required
-the user to enter \ac{SQL} and my application for querying the database.
+Setting up this part of the system shares much in common with the ``think aloud'' method of testing.
+Usually the developer will devise tasks for the participant which mimic common use cases for the part of the application being tested. Similarly, with the library the developer can use these same tasks but formalise them in the JSON files given as arguments in the setup of the library.
 
-The users were then timed on how long they took to complete the task (whether
-they completed the task successfully or not). The time that it took to complete
-the task along with whether or not the user was successful in completing the
-task was then recorded. If the user made a small mistake with the \ac{SQL}
-syntax or made a graph that did not provide the exact result then this was also
-marked as a failure. During the user working through the tasks notes were taken
-about any problems that the users had using the application.
-
-\subsection{Questionnaire}
+\subsection{Enabling the Library to Gather Data}
 
-After completing the tasks described above the users filled in a short
-questionnaire about their experience using both tools and the comparison
-between them. The final section of the questionnaire asked the user for
-longer-form answers about how they thought the application could be improved
-and any other comments they had about using the application.
+The effort required to finish the integration will depend on the architecture of the application being tested, and the level of detail the developer wants the library to record. In the ideal case it can take as little as four \todo{Make sure this is always correct} lines of code, plus one statement for each of the defined tasks at the point where they should be completed. For some apps and apps that make use of fragments it may take more work, but in few cases should it be more than a few more lines of code.
 
-\section{Results Analysis}
+For a developer who is familiar with the application being tested and has experience with the testing library this should not amount to more than a few hours work (and can be done incrementally as the application is being developed). While this integration cost is not present when using other ways of usability testing, it can be compared to the cost of having to write unit and integration tests, and in a similar manner to these it hopefully pays off in the long run.
 
-\subsection{Minimal Previous SQL Experience}
+\subsection{Think of a title}
 
-For users who were new to SQL the system allowed the to query a database
-effectively but admittedly at a much slower pace than users who were able to
-call upon their \ac{SQL} experience. The best example of this is \textbf{User
-1} who had no knowledge of SQL and yet was still able to use the application.
+As a small and unscientific test of the ease of integration into a new application, the library was integrated into an updated version of the application used for development, reusing the same tasks \ref{fig:updated-application}. In the interim between the version frozen for development and the latest version, the architecture of the code was refactored significantly, as has much of the user interface. Additionally, whereas the old application used a separate activity for each screen, the latest makes use of a single activity and swaps fragments between screens.
 
-However, it was noted that a user who did not have at least a basic level of
-understanding of \ac{SQL} had some trouble working out some of the phrases used
-in in the application.
+\todo{How much effort was this?}
 
-\begin{description}
+\begin{figure}
+ \missingfigure{Updated application}
+ \label{fig:updated-application}
+\end{figure}
 
-\item[Select vs. Filter] \hfill
+\section{Ease of Testing}
 
-Some users found the distinction between \textbf{select} and \textbf{filter} (a
-WHERE clause in \ac{SQL}) to be, in their mind, synonymous and often confused
-the two.
+This is the area where this library hopes to improve on ``think aloud'' testing.
 
-\item[Equal vs. Matches] \hfill
+Again, the convenience this method provides depends on the application being tested. Since it makes use of crowdsourcing, the quality of results relies on having a number of people available to use it. This might be trivial with an application which, for example, has an existing beta program within an organisation. I this scenario the testing library can be integrated into the version distributed to the beta users and run when on the first use of the application, or when a new feature to be tested in implemented.
 
-User 1 in particular found the difference between \textbf{eq} ($=$) and
-\textbf{matches} to be confusing.
+If a something like this does not exist then there are other solutions to this problem. One route would be Amazon Mechanical Turk (MTurk), a well known web service where users perform short tasks for a small payment - usually in the region of a few tens of cents (USD). Although this route involves money it still compares very favourably with the amounts that are usually paid to testing participants, or to services such as usertesting.com (\todo{Some of this info in the Other Stuff section}) which charges \$49 per user.
 
-\end{description}
+\section{Quality of the results}
 
-Obviously, the times that the users who did not know \ac{SQL} took to complete
-the task are in this case not useful as there is nothing to compare them to.
-However, User 2 provided interesting data as they had a basic understanding of
-\ac{SQL}. The time differences between the two were either insignificant or it
-was found that using \ac{SQL} to query the database was considerably faster.
+To evaluate the effectiveness of the data gathered from the testing process, a number of participants were given the test application and told to complete all the tasks. The application used was the same as the one used for designing and developing the library and the tasks used are shown in Appendix \ref{apdx:evaluation} along with the result graphs generated by the web service.
 
-Where I feel the most interesting results come is that in all but one case that
-if a user wasn't able to complete the task \emph{correctly} when using SQL then
-they were able to create a valid and correct query using the graph query
-application. This may show that even though users were slower at creating
-queries using the application the queries that they created were syntactically
-and semantically correct.
+Since the application required some setup on the computer side, which was not being tested, a laptop with the software installed was provided to the participant. The tests were supervised to observe how the participant coped with using the test system, but were told not to speak during the test or voice any opinion on the usability of the app itself.
 
-\subsection{Previous SQL Experience}
+Design of the test, 
+how it was performed, 
+how many people, 
+what the tasks were.
 
-The users with previous \ac{SQL} experience provided the most complete and
-useful timing results as they were able to provide results for both the
-\ac{SQL} and new application questions. However, similar to \textbf{User 2}
-their times were also similar or slower using the graph query application
-rather than using plain \ac{SQL}.
-
-The problems that the more advanced users encountered were more with the
-usability of the program rather than any confusion with the usage of the
-program itself. However, all users apart from \textbf{User 3} had difficulty
-when they were required to join 3 tables together. The users who knew \ac{SQL}
-were also able to create the simple (2 table equi-join) joins easily.
-
-\subsection{Questionnaire Answers}
-
-The most promising results by far were those from the questionnaire. Every
-single user preferred using the graph query application to using \ac{SQL}.
-Additionally, all of the users stated that they would consider using the
-application to perform queries in the future.
-
-\section{Improvements to the Application}
-
-After getting feedback from the user testing there are a number of things that
-I could do to improve the usability of the application and allow users that are
-not familiar with \ac{SQL} to more easily use the application.
-
-\begin{description}
-
-\item[Remove Joins] \hfill
-
-The idea of joins was confusing for all users. The more advanced users were
-able to figure them out after some slight thought. The beginner users had
-significant trouble understanding how they worked and how to apply them to the
-problem. Both sets of users had trouble joining more than 2 tables together.
-
-To this end it may be wise to remove the concept of joins from the application
-entirely and automatically enter them into the queries if they are
-needed.\footnote{Sasa Pastor's project work this year does exactly this and
-would be a useful starting point if this was implemented.} When a user selects
-data that is sourced from more than one table it would automatically scan the
-database for the list of tables that could be joined together in order to
-compute the join. However, at the current moment the application doesn't have
-a connection open to the database while it is running it would be up to the
-user to enter in the schema details in order for this to be computed.
-Alternatively the application could be allowed to connect to the database to
-gather the schema for itself.
-
-The next problem is working out how to join two tables together also without
-requiring the user to enter extra information. Given two tables there are a few
-ways that the correct join attributes could be computed.
-
-\begin{itemize}
-
-\item Check for explicit foreign key definitions in the database.
-
-\item Check to see for matching data types in the two tables.
-
-\item Check to see if there are any clues in the names of the attributes. For
-	example, \texttt{student\_id} will probably join to an attribute named
-	\texttt{id} in a table named \texttt{student}.
-
-\item Check to see if the values in one column of one table are in the other
-	column of the other table.
-
-\item All of the above. By using a compound score and weighting all of the
-	different metrics based on how reliable they were it would be possible to take
-	the pairing with the maximum score and use that.
-
-\end{itemize}
-
-\item[Select/Filter Confusion] \hfill
-
-Due to the confusion between the \textbf{select} and \textbf{filter} nodes and
-their purposes there should be work done into clarifying the two. This could be
-as simple as finding better names for them or alternatively removing the
-concept of column selection completely and allowing the user select the columns
-that they would like to get when they place the output node.
-
-\item[Moving \& Deleting placed nodes] \hfill
-
-Many users attempted to either move or delete nodes after they had been placed.
-This is an obvious fix and just requires adding those features to the
-application. This should also stop any user confusion at messy graphs after
-they have placed the nodes in the wrong location.
-
-\item[Arrows] \hfill
-
-To help the users understand the flow of data through the application it may be
-useful for them to visualise this by adding arrows on to the edges between
-nodes. This makes sense as the graph is technically directed.
-
-\item[Help \& Tooltips] \hfill
-
-Users suggested that there should be an integrated help document in order to
-get started with the application. One user also suggested adding tooltips to
-the node types so that their usage and attributes can be found by user
-exploration of the progream rather than being explicitly told.
-
-\end{description}
-
-\section{Future Work}
-
-There is additional work that was not suggested by users in their evaluation of
-the program but that is the sensible next steps for this application. This
-additional work contains future feature possibilities from all components of
-the project.
-
-\subsection{Filesystem}
-
-\begin{description}
-
-	\item[Spreadsheet Compatability] \hfill
-
-		At the moment the application is only compatible with displaying and
-		detecting edits to \texttt{.csv} files. A more generic interface should
-		be implemented using the delegate pattern so developers are easily able
-		to provide their own file type adapters. These adapters can then
-		implement methods that will read, parse and generate the new file
-		types. The next file types that should be implemented in order to
-		increase the audience for the system are probably the Excel file types
-		(\texttt{.xls}, \texttt{.xlsx}) and the OpenOffice file type
-		(\texttt{.ods}).
-
-	\item[Visualisation Files] \hfill
-
-		\nopagebreak
-
-		There is a great opportunity to fully exploit the fact that
-		a filesystem is able to serve up any data that it is told to. Another
-		future feature would be to allow the system to serve up different files
-		in order to visualise the data in different ways. For example, we could
-		display images and charts to the user describing the data that is
-		inside the database. This is another opportunity to allow other
-		developers create custom adapters to allow them to easily present the
-		data in any way that they choose.
-
-	\item[Database Portability] \hfill
-
-		The system is currently only tested and compatible with the
-		\emph{SQLite} \ac{DBMS} due to the simplicity of creating a new
-		database in memory. However, the internal components are all database
-		agnostic and should will work with any of the popular databases. Some
-		additional work needs to be done to set up tests for these new
-		databases and to allow the user to pass their connection information on
-		to the already compatible internals.
-
-\end{description}
-
-\subsection{Query Application}
-
-\begin{description}
-
-	\item[Node Icons] \hfill
-
-		It was brought up during supervisor meetings that the icons that are
-		currently used to represent the nodes are dreadful. A less offensive
-		colour scheme is now being used but further work could be done in order
-		to improve the aesthetics and usability of the application. The
-		replacement icons could convey more accurately what the node was
-		actually doing.
-
-	\item[More Node Types] \hfill
-
-		The \emph{Squeal} language currently supports more operations than the
-		user is able to create with the query application. For example, users
-		are able to use the \texttt{SKIP} \ac{SQL} operator when using the
-		scripting language but this node is not available in the application.
-		There should be feature parity between the two applications.
-
-\end{description}
+\todo{Potential usability problems with the library e.g. ease of writing effective tasks - found sometimes not read or understood properly. Give the example of the "play album" task, where people usually completed the task in a way that's not stressing the parts of the ui the developer wanted. Quite obvious what happened in the data, but did people just not read the task or was the task an unrealistic scenario?}
