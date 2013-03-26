@@ -1,48 +1,122 @@
 \chapter{Evaluation}
 
-To measure the usefulness of this method of testing, a number of aspects of the library were tested and contrasted to other ways of gaining insights into the usability of an Android application.
+To measure the usefulness of this method of testing, a number of
+aspects of the library were tested and contrasted to other ways of
+gaining insights into the usability of an Android application.
 
 \section{Integration}
 
 \subsection{Creating Tasks}
 
-Setting up this part of the system shares much in common with the ``think aloud'' method of testing.
-Usually the developer will devise tasks for the participant which mimic common use cases for the part of the application being tested. Similarly, with the library the developer can use these same tasks but formalise them in the JSON files given as arguments in the setup of the library.
+Setting up this part of the system shares much in common with the
+``think aloud'' method of testing.  Usually the developer will
+devise tasks for the participant which mimic common use cases for
+the part of the application being tested. Similarly, with the library
+the developer can use these same tasks but formalise them in the
+JSON files given as arguments in the setup of the library.
 
 \subsection{Enabling the Library to Gather Data}
 
-The effort required to finish the integration will depend on the architecture of the application being tested, and the level of detail the developer wants the library to record. In the ideal case it can take as little as four \todo{Make sure this is always correct} lines of code, plus one statement for each of the defined tasks at the point where they should be completed. For some apps and apps that make use of fragments it may take more work, but in few cases should it be more than a few more lines of code.
+The effort required to finish the integration will depend on the
+architecture of the application being tested, and the level of
+detail the developer wants the library to record. In the ideal case
+it can take as little as four \todo{Make sure this is always correct}
+lines of code, plus one statement for each of the defined tasks at
+the point where they should be completed. For some apps and apps
+that make use of fragments it may take more work, but in few cases
+should it be more than a few more lines of code.
 
-For a developer who is familiar with the application being tested and has experience with the testing library this should not amount to more than a few hours work (and can be done incrementally as the application is being developed). While this integration cost is not present when using other ways of usability testing, it can be compared to the cost of having to write unit and integration tests, and in a similar manner to these it hopefully pays off in the long run.
+For a developer who is familiar with the application being tested
+and has experience with the testing library this should not amount
+to more than a few hours work (and can be done incrementally as the
+application is being developed). While this integration cost is not
+present when using other ways of usability testing, it can be
+compared to the cost of having to write unit and integration tests,
+and in a similar manner to these it hopefully pays off in the long
+run.
 
 \subsection{Think of a title}
 
-As a small and unscientific test of the ease of integration into a new application, the library was integrated into an updated version of the application used for development, reusing the same tasks \ref{fig:updated-application}. In the interim between the version frozen for development and the latest version, the architecture of the code was refactored significantly, as has much of the user interface. Additionally, whereas the old application used a separate activity for each screen, the latest makes use of a single activity and swaps fragments between screens.
+As a small and unscientific test of the ease of integration into a
+new application, the library was integrated into an updated version
+of the application used for development, reusing the same tasks
+\ref{fig:updated-application}. In the interim between the version
+frozen for development and the latest version, the architecture of
+the code was refactored significantly, as has much of the user
+interface. Additionally, whereas the old application used a separate
+activity for each screen, the latest makes use of a single activity
+and swaps fragments between screens.
 
 \todo{How much effort was this?}
 
 \begin{figure}
- \missingfigure{Updated application}
- \label{fig:updated-application}
+ \missingfigure{Updated application} \label{fig:updated-application}
 \end{figure}
 
 \section{Ease of Testing}
 
-This is the area where this library hopes to improve on ``think aloud'' testing.
+This is the area where this library hopes to improve on ``think
+aloud'' testing.
 
-Again, the convenience this method provides depends on the application being tested. Since it makes use of crowdsourcing, the quality of results relies on having a number of people available to use it. This might be trivial with an application which, for example, has an existing beta program within an organisation. I this scenario the testing library can be integrated into the version distributed to the beta users and run when on the first use of the application, or when a new feature to be tested in implemented.
+Again, the convenience this method provides depends on the application
+being tested. Since it makes use of crowdsourcing, the quality of
+results relies on having a number of people available to use it.
+This might be trivial with an application which, for example, has
+an existing beta program within an organisation. I this scenario
+the testing library can be integrated into the version distributed
+to the beta users and run when on the first use of the application,
+or when a new feature to be tested in implemented.
 
-If a something like this does not exist then there are other solutions to this problem. One route would be Amazon Mechanical Turk (MTurk), a well known web service where users perform short tasks for a small payment - usually in the region of a few tens of cents (USD). Although this route involves money it still compares very favourably with the amounts that are usually paid to testing participants, or to services such as usertesting.com (\todo{Some of this info in the Other Stuff section}) which charges \$49 per user.
+If a something like this does not exist then there are other solutions
+to this problem. One route would be Amazon Mechanical Turk (MTurk),
+a well known web service where users perform short tasks for a small
+payment - usually in the region of a few tens of cents (USD).
+Although this route involves money it still compares very favourably
+with the amounts that are usually paid to testing participants, or
+to services such as usertesting.com (\todo{Some of this info in the
+Other Stuff section}) which charges \$49 per user.
 
 \section{Quality of the results}
 
-To evaluate the effectiveness of the data gathered from the testing process, a number of participants were given the test application and told to complete all the tasks. The application used was the same as the one used for designing and developing the library and the tasks used are shown in Appendix \ref{apdx:evaluation} along with the result graphs generated by the web service.
+To evaluate the effectiveness of the data gathered from the testing
+process, a number of participants were given the test application
+and told to complete all the tasks. The application used was the
+same as the one used for designing and developing the library and
+the tasks used are shown in Appendix \ref{apdx:evaluation} along
+with the result graphs generated by the web service.
 
-Since the application required some setup on the computer side, which was not being tested, a laptop with the software installed was provided to the participant. The tests were supervised to observe how the participant coped with using the test system, but were told not to speak during the test or voice any opinion on the usability of the app itself.
+Since the application required some setup on the computer side,
+which was not being tested, a laptop with the software installed
+was provided to the participant. The tests were supervised to observe
+how the participant coped with using the test system, but were told
+not to speak during the test or voice any opinion on the usability
+of the app itself.
 
-Design of the test, 
-how it was performed, 
-how many people, 
-what the tasks were.
+Design of the test, how it was performed, how many people, what the
+tasks were.
 
-\todo{Potential usability problems with the library e.g. ease of writing effective tasks - found sometimes not read or understood properly. Give the example of the "play album" task, where people usually completed the task in a way that's not stressing the parts of the ui the developer wanted. Quite obvious what happened in the data, but did people just not read the task or was the task an unrealistic scenario?}
+\todo{Write all these up}
+
+Things noticed so far:
+
+\begin{itemize}
+  \item addalbumtoplaylist has 100\% abandon rate! Graph shows what screen users expected to find
+        the option before abandoning the task.
+  \item playlibrary had high abandon rates - surprised me but people had issues finding the menu.
+  \item search shows multiple paths, some with high backtrack rates - indicates that some areas of
+        search UI are good, but others need work. In this case it looks like it is hard to find a 
+        popular song from the artist page.
+  \item most other tasks have good completion rates
+  \item viewalbum showed people completing the task but not in the way implied by the task description.
+        Badly written task? Showed UI was ok for finding an album but didn't test the part of the
+        interface the developer wanted to.
+\end{itemize}
+
+
+\todo{Potential usability problems with the library e.g. ease of
+writing effective tasks - found sometimes not read or understood
+properly. Give the example of the "play album" task, where people
+usually completed the task in a way that's not stressing the parts
+of the UI the developer wanted. Quite obvious what happened in the
+data, but did people just not read the task or was the task an
+unrealistic scenario?}

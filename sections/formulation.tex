@@ -1,15 +1,53 @@
 \chapter{Formulation of the Problem}
 
-Traditional approaches to usability testing are difficult to set up and run, requiring a significant time and cost investment to find participants and involve them in testing. Because of this testing may not involve as many people from enough backgrounds to find all the usability problems in an application. It might also not be performed often enough during development, and small organisations or individuals might shy away from performing any usability testing whatsoever.
+The main obstacles to effective usability testing on the Android
+platform are cost, expertise and the lack of effective automation.
+If performing think aloud testing, participants must be found and
+then travel to the site of the testing (or the developer travel to
+them), and are usually paid for their time.  While there are services
+that take care of much of the process on behalf of the developer,
+the process tends to be costly, especially if it is done often.
 
-While analytics services can gather large amounts of data from the interaction of users with an application, the lack of structure can make it difficult to draw meaningful conclusions as information about the intent of the user is lost when the data is gathered. Without knowing the intent of users when they are performing tasks, the data gathered cannot reveal where features of an application are used or not used because their usability is poor, or whether they are simply less popular.  
+Other types of usability testing such as heuristic evaluation must
+be performed by experts to be effective.
 
-Tasks which always have a specific structured workflow, such as a checkout process, are easier to analyse with existing analytics services, as user intent is clear. By giving the user more structured tasks it should be possible to collect useful data from other parts of a mobile application.
+Because of these obstacles, usability testing may not be performed
+often or even at all during the development of a mobile application,
+causing usability issues in the user interface to go undetected.
 
 \todo{Keeping people engaged}
 
 \section{Proposed Solution}
 
-By combining some of the methodologies traditionally used in usability testing with analytics, it should be possible to provide a structured environment that can easily be given to people unfamiliar with an application, and to easily gather data which will identify potential problem areas with respect to usability.
+While analytics services can gather large amounts of data from the
+interaction of users with an application, the lack of structure can
+make it difficult to draw meaningful conclusions as information
+about the intent of the user is lost when the data is gathered.
+Without knowing the intent of users as they are using the application,
+the data gathered cannot reveal where features of an application
+are used or not used because their usability is poor, or whether
+they are simply less popular.
 
-The solution will take the form of a framework that can be easily integrated into any mobile application, with as little modification to the application's code as possible. The developer will define tasks for the user to complete with defined starting points in the app to make aggregation of data easier. Users can then attempt to complete the tasks independently without there needing to be a member of the development team present, as is usual with usability testing, and the results will automatically be uploaded for the developer to view at a later time. By aggregating the data from many tests common problem areas should be able to be identified and investigated further.
+Tasks which always have a specific structured workflow, such as a
+checkout process, are easier to analyse with existing analytics
+services, as user intent is clear. By giving the user more structured
+tasks it should be possible to collect useful data from other parts
+of a mobile application.
+
+By combining some of the methodologies traditionally used in usability
+testing with analytics, it should be possible to provide a structured
+environment that can easily be given to people unfamiliar with an
+application, and to easily gather data which will identify potential
+problem areas with respect to usability.
+
+The solution will take the form of a framework that can be easily
+integrated into any mobile application, with as little modification
+to the application's code as possible. The developer will define
+tasks for the user to complete with defined starting points in the
+app to make aggregation of data easier. Users can then attempt to
+complete the tasks independently without there needing to be a
+member of the development team present, as is usual with usability
+testing, and the results will automatically be uploaded for the
+developer to view at a later time. By aggregating the data from
+many tests common problem areas should be able to be identified and
+investigated further.

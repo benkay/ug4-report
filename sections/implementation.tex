@@ -15,8 +15,8 @@ To keep this to a minimum, all interaction with
 the library in performed using the static \verb/Gamify/ class. This allows for
 easy removal of the library as the developer can just find all references to
 this class within the main application code and remove them. Since most Android
-developers use \emph{Proguard} while compiling release versions, a rule could be
-integrated to automatically strip the function calls out of production versions.
+developers use \emph{Proguard} while compiling release versions, the rule below could be
+included to automatically strip function calls to the library out of production versions.
 
 \begin{minted}{text}
   -assumenosideeffects class com.example.Gamify {
@@ -24,7 +24,7 @@ integrated to automatically strip the function calls out of production versions.
   }
 \end{minted}
 
-The library can also be disabled by passing \verb|false| when initialising. The
+Alternatively, the library can also be disabled by passing \verb|false| when initialising. The
 initialisation is done by calling \verb|init| in either the \verb|Application|
 or initial \verb|Activity|'s \verb|onCreate| method, passing the two
 aforementioned json files.
@@ -48,8 +48,12 @@ to be started.
   Gamify.startSequence("sequenceid");
 \end{minted}
 
+This will bring up the welcome screen and instructions as to how the testing works,
+and allow the user to begin the first task in the sequence. Subsequent tasks are
+automatically started when the previous one is finished.
+
 Triggering points that will complete tasks are achieved with another method
-call, for example if one task was completed by playing a song in the app, then
+call. For example if one task was completed by playing a song in the app, then
 the corresponding code might look like:
 
 \begin{minted}{java}
@@ -83,13 +87,33 @@ methods, the library must be notified.
 This is so user interaction can be tracked, and the library's overlays can be
 shown above the foreground activity. Since applications are usually designed so
 that all activities inherit from a single base activity, this should not add
-much extra overhead for the developer.
+much extra overhead for the developer. These two methods can optionally be given 
+additional arguments as strings, as in the case of the search activity in section
+\ref{sec:developer-feedback}.
 
-\section{Viewing the Data}
+Finally, any additional navigation points can be tracked manually, by calling
 
-A companion application will run on a server and receive results from
-participants. This can be a simple web app that receives data sent by the
-Android app, validates it, and stores it in a database.  A separate web
-application will retrieve the results from the database an display them to the
-developer.
-ty
+\begin{minted}{java}
+  Gamify.trackNavPoint("Navpoint name");
+\end{minted}
+
+This is useful for tracking fragment transactions, or anything else the tester
+deems relevant.
+
+\section{Developer Interface}
+
+\subsection{Uploading and Storing Data}
+
+Once a task has been completed or abandoned, the data must be collected and centralised.
+
+To do this, the data is converted to a JSON format and automatically uploaded to a server
+running a CouchDB database. A map-reduce query in the database ca be used to extract the data
+in the form wanted for the graph display.
+
+This approach was chosen for its simplicity, ease of implementation, and the ability to iterate quickly;
+as CouchDB is a document oriented database, the raw JSON data can be stored as-is without the need
+to define a schema or do any preprocessing. The map-reduce is run incrementally when new documents are 
+received, and the resujts cached, so queries remain fast.
+
+A javascript application on a web page queries the database and generates the navigation graph for
+each task. The Dracula Graph library \cite{dracula-graph} is used to generate the graph display.
