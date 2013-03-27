@@ -1,16 +1,22 @@
 \chapter{Implementation}
 
 To allow easy integration into any Android app, the library is implemented
-as an Android Library Project \cite{android-library}.  It also needs to be easy
-to remove/disable if the developer does not want the testing functionality
-present for the released version.
+as an Android Library Project \cite{android-library}, which enables it to leverage the 
+full functionality of the android platform - it can make use of its own assets and
+layouts and manage its own dependencies - while being self contained and portable between 
+projects. The only extra considerations that have to be made with this approach is to ensure
+that all the project resources (layouts, strings, images etc.) are prefixed to avoid conflict
+with the application the library is integrated into.
 
 \section{Integrating the Library}
 
 To specify tasks, the developer creates two json files which are
 included in the application's \verb+assets/+ directory. These files specify all the tasks that are available to perform, and what order they will be performed in.
 
-To know when to begin and end tasks, inject the library's user interface in the app, and gather data about the participant's performance some integration with the application's code is needed.
+The testing functionality must be easy to remove/disable if the developer
+does not want it present in the released version. To know when to begin and end tasks,
+inject the library's user interface in the app, and gather data about the participant's 
+performance, however, some integration with the application's code is needed.
 To keep this to a minimum, all interaction with
 the library in performed using the static \verb/Gamify/ class. This allows for
 easy removal of the library as the developer can just find all references to
@@ -113,7 +119,10 @@ in the form wanted for the graph display.
 This approach was chosen for its simplicity, ease of implementation, and the ability to iterate quickly;
 as CouchDB is a document oriented database, the raw JSON data can be stored as-is without the need
 to define a schema or do any preprocessing. The map-reduce is run incrementally when new documents are 
-received, and the resujts cached, so queries remain fast.
+received, and the results cached, so queries remain fast.
+
+\subsection{Accessing Data}
 
 A javascript application on a web page queries the database and generates the navigation graph for
-each task. The Dracula Graph library \cite{dracula-graph} is used to generate the graph display.
+each task. The query returns all the navigation paths recorded for a particular task, and the application
+handles processing backtracks, merging the paths and rendering, using The Dracula Graph library \cite{dracula-graph} to display the final grahps.

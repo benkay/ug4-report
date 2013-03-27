@@ -97,6 +97,7 @@ where the same screen might be used to display different sets of data, for examp
 developer might want to include the search query used. A simple navigation path is shown in Figure \ref{fig:task-navigation}
 
 \begin{figure}
+ \centering
  \missingfigure{Mockup of a simple task navigation path.}
  \label{fig:task-navigation}
 \end{figure}
@@ -106,6 +107,7 @@ task, the paths are merged to give a navigation graph, as shown in Figure \ref{f
 common paths from the start screen to either completing or abandoning the task can be seen.
 
 \begin{figure}
+ \centering
  \missingfigure{Mockup of some merged navigation paths.}
  \label{fig:task-navigation-tree}
 \end{figure}
@@ -115,6 +117,7 @@ After a few users doing this the navigation tree became particularly messy and u
 (Figure \ref{fig:task-navigation-mess}).
 
 \begin{figure}
+ \centering
  \includegraphics[width=\textwidth]{images/messy-graph}
  \caption{Messy graphs produced when when participants backtrack.}
  \label{fig:task-navigation-mess}
@@ -124,6 +127,7 @@ A simple fix for this was to not include part of the path in the graph when the 
 to the previous point (Figure \ref{fig:task-navigation-mess-fixed}). Since this information is still important to indicate usability problems, the average number of these ``backtracks'', if any, is shown below each node in the graph.
 
 \begin{figure}
+ \centering
  \includegraphics[width=\textwidth]{images/fixed-graph}
  \caption{The same graph after filtering backtracking.}
  \label{fig:task-navigation-mess-fixed}
