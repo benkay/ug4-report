@@ -1,28 +1,100 @@
 \chapter{Implementation}
 
-To allow easy integration into any Android app, the library is implemented
-as an Android Library Project \cite{android-library}, which enables it to leverage the 
-full functionality of the android platform - it can make use of its own assets and
-layouts and manage its own dependencies - while being self contained and portable between 
-projects. The only extra considerations that have to be made with this approach is to ensure
-that all the project resources (layouts, strings, images etc.) are prefixed to avoid conflict
-with the application the library is integrated into.
+To allow easy integration into any Android app, the library is
+implemented as an Android Library Project \cite{android-library},
+which enables it to leverage the full functionality of the android
+platform - it can make use of its own assets and layouts and manage
+its own dependencies - while being self contained and portable
+between projects. The only extra considerations that have to be
+made with this approach is to ensure that all the project resources
+(layouts, strings, images etc.) are prefixed to avoid conflict with
+the application the library is integrated into.
+
+\section{Integrating With the Application}
+
+A major challenge during the implementation was allowing the library
+to display its UI before, during and after a task, while requiring
+the application developer to write as little code specific to the
+testing as possible.
+
+The user interface appears in two forms. One is a full screen layout
+that appears before and after a task, and also before the testing
+begins, and the other a small strip that appears above the 
+application interface during completion of a task.
+
+The full screen layouts were initially shown by opening a separate
+activity. This approach had some drawbacks, the main one being that
+(at the time of writing) all activities must be registered in the
+main app's manifest as opposed to the library project's manifest.
+This creates extra integration work, and cannot be automatically
+removed. \todo{Other drawbacks?}
+
+In addition, this does not solve the issue of the in-task interface.
+The method used for both problems takes advantage of how android
+draws views.
+
+\subsection{Injecting Views Into the Current Activity}
+
+Interface elements on android are known as ``views'', since they
+extend the View class, and are organised into a view hierarchy.
+When an Activity is created, it also creates its view hierarchy
+(by inflating a layout xml file or creating it programmatically)
+and inserts it into a container provided by the current window.
+At the root of the hierarchy is the decor view, which holds this
+container along with other interface elements such as the action
+bar. This entire hierarchy can be inspected with the HierarchyViewer
+application that ships with the Android SDK, as shown in Figure
+\ref{fig:view-hierarchy}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.35\textwidth]{images/view-hierarchy}
+  \caption{The view hierarchy of a simple Android Activity. The
+           view id/content is the container for the Activity's
+           content.}
+  \label{fig:view-hierarchy}
+\end{figure}
+
+By obtaining a reference to the decor view using 
+\verb/Activity.getWindow().getDecorView()/ the library's UI can
+be either overlaid, or inserted into the top of the LinearLayout
+shown beneath the DecorView in Figure \ref{fig:view-hierarchy}.
+
+\subsection{Keeping State}
+
+To ensure the interface remains in place as the user navigates
+between activities, and does not appear on old activities, the
+library must keep track of what UI (if any) is showing, and 
+the current foreground Activity. When the foreground activity
+pauses, due to the user navigating elsewhere or the current
+activity getting destroyed (due to, for example, a screen
+rotation), the extra UI must be removed from the layout and 
+inserted into the new foreground activity.
+
+With this approach, the developer need not modify any xml files
+in the project, and must only include a small amount of additional
+code.
 
 \section{Integrating the Library}
 
-To specify tasks, the developer creates two json files which are
-included in the application's \verb+assets/+ directory. These files specify all the tasks that are available to perform, and what order they will be performed in.
+To specify tasks, the developer creates two JSON files which are
+included in the application's \verb+assets/+ directory. These files
+specify all the tasks that are available to perform, and what order
+they will be performed in.
 
-The testing functionality must be easy to remove/disable if the developer
-does not want it present in the released version. To know when to begin and end tasks,
-inject the library's user interface in the app, and gather data about the participant's 
-performance, however, some integration with the application's code is needed.
-To keep this to a minimum, all interaction with
-the library in performed using the static \verb/Gamify/ class. This allows for
-easy removal of the library as the developer can just find all references to
-this class within the main application code and remove them. Since most Android
-developers use \emph{Proguard} while compiling release versions, the rule below could be
-included to automatically strip function calls to the library out of production versions.
+The testing functionality must be easy to remove/disable if the
+developer does not want it present in the released version. To know
+when to begin and end tasks, inject the library's user interface
+in the app, and gather data about the participant's performance,
+however, some integration with the application's code is needed.
+To keep this to a minimum, all interaction with the library in
+performed using the static \verb/Gamify/ class. This allows for
+easy removal of the library as the developer can just find all
+references to this class within the main application code and remove
+them. Since most Android developers use \emph{Proguard} while
+compiling release versions, the rule below could be included to
+automatically strip function calls to the library out of production
+versions.
 
 \begin{minted}{text}
   -assumenosideeffects class com.example.Gamify {
@@ -30,10 +102,10 @@ included to automatically strip function calls to the library out of production 
   }
 \end{minted}
 
-Alternatively, the library can also be disabled by passing \verb|false| when initialising. The
-initialisation is done by calling \verb|init| in either the \verb|Application|
-or initial \verb|Activity|'s \verb|onCreate| method, passing the two
-aforementioned json files.
+Alternatively, the library can also be disabled by passing \verb|false|
+when initialising. The initialisation is done by calling \verb|init|
+in either the \verb|Application| or initial \verb|Activity|'s
+\verb|onCreate| method, passing the two aforementioned json files.
 
 \begin{minted}{java}
   Gamify.init(this /* Context */, true /* Enabled */,
@@ -42,25 +114,32 @@ aforementioned json files.
 
 \subsection{Defining tasks}
 
-The ``challenges.json'' and ``sequences.json'' files define the tasks and
-challenges that will be used in testing, identified by ids. Each task has a title, description, and optional instruction that appears at the top of the screen during a task, and defaults to the title. The sequences file defines groups of tasks, and which order they will be run in. It also specifies whether to reset the user's position in the application hierarchy after a task, or continue from where they finished the previous task.
+The ``challenges.json'' and ``sequences.json'' files define the
+tasks and challenges that will be used in testing, identified by
+ids. Each task has a title, description, and optional instruction
+that appears at the top of the screen during a task, and defaults
+to the title. The sequences file defines groups of tasks, and which
+order they will be run in. It also specifies whether to reset the
+user's position in the application hierarchy after a task, or
+continue from where they finished the previous task.
 
 \subsection{Integrating Tasks Into the Application}
 
-To start a sequence,the developer can simply call a single method, specifying the ID of the sequence
-to be started.
+To start a sequence,the developer can simply call a single method,
+specifying the ID of the sequence to be started.
 
 \begin{minted}{java}
   Gamify.startSequence("sequenceid");
 \end{minted}
 
-This will bring up the welcome screen and instructions as to how the testing works,
-and allow the user to begin the first task in the sequence. Subsequent tasks are
-automatically started when the previous one is finished.
+This will bring up the welcome screen and instructions as to how
+the testing works, and allow the user to begin the first task in
+the sequence. Subsequent tasks are automatically started when the
+previous one is finished.
 
-Triggering points that will complete tasks are achieved with another method
-call. For example if one task was completed by playing a song in the app, then
-the corresponding code might look like:
+Triggering points that will complete tasks are achieved with another
+method call. For example if one task was completed by playing a
+song in the app, then the corresponding code might look like:
 
 \begin{minted}{java}
   public void playSong(Song song) {
@@ -70,11 +149,11 @@ the corresponding code might look like:
   }
 \end{minted}
 
-If the ``playsong'' task is the current task, then it will be completed,
-otherwise the method call will be ignored.
+If the ``playsong'' task is the current task, then it will be
+completed, otherwise the method call will be ignored.
 
-Beyond this, in each \verb|Activity|'s \verb|onResume| and \verb|onPause|
-methods, the library must be notified.
+Beyond this, in each \verb|Activity|'s \verb|onResume| and
+\verb|onPause| methods, the library must be notified.
 
 \begin{minted}{java}
   @Override protected void onResume() {
@@ -90,39 +169,48 @@ methods, the library must be notified.
   }
 \end{minted}
 
-This is so user interaction can be tracked, and the library's overlays can be
-shown above the foreground activity. Since applications are usually designed so
-that all activities inherit from a single base activity, this should not add
-much extra overhead for the developer. These two methods can optionally be given 
-additional arguments as strings, as in the case of the search activity in section
-\ref{sec:developer-feedback}.
+This is so user interaction can be tracked, and the library's
+overlays can be shown above the foreground activity. Since applications
+are usually designed so that all activities inherit from a single
+base activity, this should not add much extra overhead for the
+developer. These two methods can optionally be given additional
+arguments as strings, as in the case of the search activity in
+section \ref{sec:developer-feedback}.
 
-Finally, any additional navigation points can be tracked manually, by calling
+Finally, any additional navigation points can be tracked manually,
+by calling
 
 \begin{minted}{java}
   Gamify.trackNavPoint("Navpoint name");
 \end{minted}
 
-This is useful for tracking fragment transactions, or anything else the tester
-deems relevant.
+This is useful for tracking fragment transactions, or anything else
+the tester deems relevant.
 
 \section{Developer Interface}
 
 \subsection{Uploading and Storing Data}
 
-Once a task has been completed or abandoned, the data must be collected and centralised.
+Once a task has been completed or abandoned, the data must be
+collected and centralised.
 
-To do this, the data is converted to a JSON format and automatically uploaded to a server
-running a CouchDB database. A map-reduce query in the database ca be used to extract the data
-in the form wanted for the graph display.
+To do this, the data is converted to a JSON format and automatically
+uploaded to a server running a CouchDB database. A map-reduce query
+in the database ca be used to extract the data in the form wanted
+for the graph display.
 
-This approach was chosen for its simplicity, ease of implementation, and the ability to iterate quickly;
-as CouchDB is a document oriented database, the raw JSON data can be stored as-is without the need
-to define a schema or do any preprocessing. The map-reduce is run incrementally when new documents are 
-received, and the results cached, so queries remain fast.
+This approach was chosen for its simplicity, ease of implementation,
+and the ability to iterate quickly; as CouchDB is a document oriented
+database, the raw JSON data can be stored as-is without the need
+to define a schema or do any preprocessing. The map-reduce is run
+incrementally when new documents are received, and the results
+cached, so queries remain fast.
 
 \subsection{Accessing Data}
 
-A javascript application on a web page queries the database and generates the navigation graph for
-each task. The query returns all the navigation paths recorded for a particular task, and the application
-handles processing backtracks, merging the paths and rendering, using The Dracula Graph library \cite{dracula-graph} to display the final grahps.
+A javascript application on a web page queries the database and
+generates the navigation graph for each task. The query returns all
+the navigation paths recorded for a particular task, and the
+application handles processing backtracks, merging the paths and
+rendering, using The Dracula Graph library \cite{dracula-graph} to
+display the final graphs.
