@@ -1,16 +1,28 @@
 \chapter{Implementation}
 
-To allow easy integration into any Android app, the library is
-implemented as an Android Library Project \cite{android-library},
-which enables it to leverage the full functionality of the android
+\section{Integrating With the Application}
+
+One of the requirements for the system was to be portable across
+applications. It was also desirable to be as easy to implement
+as possible by the app developer using minimal code and no
+modifications to the app's assets.
+
+There are two ways of adding dependencies to an Android project;
+either using packaged \verb/.jar/ files as with any other java based
+project, or by packaging the dependency as an Android Library
+Project \cite{android-library}. A library project is similar to
+an ordinary Android project, with the exception that it cannot
+be run as a standalone application. This enables it to leverage
+ the full functionality of the android
 platform - it can make use of its own assets and layouts and manage
 its own dependencies - while being self contained and portable
 between projects. The only extra considerations that have to be
-made with this approach is to ensure that all the project resources
-(layouts, strings, images etc.) are prefixed to avoid conflict with
+made with this approach is that all the project resources
+(layouts, strings, images etc.) are merged with the main application's
+resources, so they must be prefixed to avoid conflict with
 the application the library is integrated into.
 
-\section{Integrating With the Application}
+\subsection{User Interface}
 
 A major challenge during the implementation was allowing the library
 to display its UI before, during and after a task, while requiring
@@ -30,10 +42,10 @@ This creates extra integration work, and cannot be automatically
 removed. \todo{Other drawbacks?}
 
 In addition, this does not solve the issue of the in-task interface.
-The method used for both problems takes advantage of how android
-draws views.
+The approach used in the end for both problems takes advantage of
+how android draws views.
 
-\subsection{Injecting Views Into the Current Activity}
+\subsection{Injecting Views}
 
 Interface elements on android are known as ``views'', since they
 extend the View class, and are organised into a view hierarchy.
@@ -51,7 +63,8 @@ application that ships with the Android SDK, as shown in Figure
   \includegraphics[width=0.35\textwidth]{images/view-hierarchy}
   \caption{The view hierarchy of a simple Android Activity. The
            view id/content is the container for the Activity's
-           content.}
+           content. Image copied from the official Android 
+           developer blog.}
   \label{fig:view-hierarchy}
 \end{figure}
 

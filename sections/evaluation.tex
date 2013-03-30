@@ -1,4 +1,4 @@
-\chapter{Evaluation}
+\chapter{Evaluation \& Future Work}
 
 To measure the usefulness of this method of testing, a number of
 aspects of the library were tested and contrasted to other ways of
@@ -122,3 +122,53 @@ usually completed the task in a way that's not stressing the parts
 of the UI the developer wanted. Quite obvious what happened in the
 data, but did people just not read the task or was the task an
 unrealistic scenario?}
+
+\section{Future Work}
+
+\subsection{Issues Encountered}
+
+Depending on the task and the application being tested, the user 
+evaluation highlighted a problem with the library which arises
+due to the ability to abandon tasks, and when a subsequent task
+depends on state set in a previous, abandoned task. The most 
+obvious example in the application here is the initial pairing
+and connecting, which none of the subsequent tasks can be done
+without. During evaluation the ability to abandon this first task
+was disabled to combat this, and luckily no participant was unable
+to complete the challenge.
+
+The same problem, however, appeared later during the third task, when
+the participant is told to skip to the next song in the play queue.
+If the previous task had not been successfully completed there was a
+chance that either nothing would be playing, or the play queue would
+only be holding a single track making the task confusing and nonsensical
+to the participant. Even if they then add songs to the queue, it affects
+the navigation path generated for the task.
+
+In a future revision of the library, the obvious way to solve the above issue
+would be to allow the app developer to provide logic to run in the event
+a task is abandoned. In this example, the library could look for a
+particular class with the static method \verb/playlibrary_Abandoned()/
+using Java reflection and invoke it. The method would simply insert
+songs into the play queue in preparation for the subsequent tasks.
+
+\subsection{Results and Data}
+
+This project concentrated on the capture of navigation data, and a single
+way of presenting the results. Once the framework is implemented into the
+application other forms of data could be captured during the testing
+process with the aim of providing more detail about user behaviour and
+issues.
+
+One example of an extension to the project might be to provide heatmaps
+of user interaction on each screen. Since the library already has the
+capability to inject views into the current layout, it should be possible
+to overlay a transparent view that serves to capture touch information
+whenever the participant uses the screen. Similar approaches are already
+used in user testing on the web and desktop, and the same system could
+be used with both traditional in-person testing and crowdsourced testing.
+
+
+\subsection{Combination With Other Tests}
+
+\todo{Combining with A/B testing might be interesting, but harder on mobile.}

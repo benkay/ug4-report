@@ -37,7 +37,8 @@ possible could cause the participant to focus on the on screen timer instead of 
 Additionally, the point system did not seem to work as hoped, missing crucial aspects that usually make point systems encouraging.  Since the "game" was not really repeatable, and points were not ranked against any other player or used for any other purpose, participants did not see the point (HA I AM SO FUNNY) in gathering them. 
 
 \begin{figure}[ht!]
-  \centering \includegraphics[width=0.5\textwidth]{images/time-taken}
+  \centering 
+  \includegraphics[width=0.5\textwidth]{images/time-taken}
   \caption{The task overlay in early iterations of the project.}
   \label{fig:initial-overlay}
 \end{figure}
@@ -53,9 +54,10 @@ the library.
 
 \emph{Figure \ref{fig:initial-overlay}} also shows how the early version of the in-task UI was an overlay over the application interface. While this was semi-transparent, it still had a tendency to obscure important controls, making it harder to use the application. This was refined after the initial evaluation so it no longer obscures content while still displaying important information about the task. The final UI can be seen in \emph{Figure \ref{fig:final-task-overlay}}. While placing an extra piece of interface at the top of the screen affects the height available to the application, android apps must adapt to different screen sizes anyway, and the space taken up is designed to be as small as possible. Using this design also enables controls to be placed in the in-task UI, here used for an "Abandon" button.
 
-\begin{figure}
+\begin{figure}[ht]
   \centering
-  \missingfigure{Show the new in-task UI}
+  \includegraphics[width=0.5\textwidth]{images/new-in-task}
+  \caption{The final iteration of the in-task UI}
   \label{fig:final-task-overlay}
 \end{figure}
 
