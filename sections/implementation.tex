@@ -1,5 +1,15 @@
 \chapter{Implementation}
 
+An Android app had to be chosen to test and used to develop the initial
+implementation. The app chosen was GSRemote, an app that I have
+been developing as a hobby, since it is moderately complex, and I already
+have a good understanding of the source code which make integration easier.
+The app is a remote control for the web music service ``Grooveshark'',
+so functions similarly to a normal music player app except it controls
+a player running on the user's desktop or laptop.
+Despite this, the library should be generic enough to easily integrate 
+into any Android app.
+
 \section{Integrating With the Application}
 
 One of the requirements for the system was to be portable across
@@ -58,11 +68,11 @@ bar. This entire hierarchy can be inspected with the HierarchyViewer
 application that ships with the Android SDK, as shown in Figure
 \ref{fig:view-hierarchy}.
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \includegraphics[width=0.35\textwidth]{images/view-hierarchy}
   \caption{The view hierarchy of a simple Android Activity. The
-           view id/content is the container for the Activity's
+           view ``id/content'' is the container for the Activity's
            content. Image copied from the official Android 
            developer blog.}
   \label{fig:view-hierarchy}
@@ -89,11 +99,6 @@ in the project, and must only include a small amount of additional
 code.
 
 \section{Integrating the Library}
-
-To specify tasks, the developer creates two JSON files which are
-included in the application's \verb+assets/+ directory. These files
-specify all the tasks that are available to perform, and what order
-they will be performed in.
 
 The testing functionality must be easy to remove/disable if the
 developer does not want it present in the released version. To know
@@ -127,18 +132,58 @@ in either the \verb|Application| or initial \verb|Activity|'s
 
 \subsection{Defining tasks}
 
-The ``challenges.json'' and ``sequences.json'' files define the
-tasks and challenges that will be used in testing, identified by
-ids. Each task has a title, description, and optional instruction
+The developer must have a way of specifying tasks and supplying
+them to the library. Ideally this should be done without having
+to modify any part of the library's code or assets. JSON was
+chosen as the format to define tasks, since it is easy to write
+and well known among developers.
+The ``challenges.json'' and ``sequences.json'' files in the code
+above must be included in the application's \verb+assets/+ directory.
+They define the tasks that are available to perform, and what order
+they will be performed in.
+Each task has an id, title, description, and optional instruction
 that appears at the top of the screen during a task, and defaults
-to the title. The sequences file defines groups of tasks, and which
+to the title. The full specification can be seen in figure \ref{fig:task-spec}.
+The sequences file defines groups of tasks, and which
 order they will be run in. It also specifies whether to reset the
 user's position in the application hierarchy after a task, or
 continue from where they finished the previous task.
 
+\begin{figure}[h]
+  \begin{minted}{javascript}
+  [
+  
+    {
+      id: "Task Identifier", 
+      title: "Task title",
+      description: "Task description",
+      instruction: "Text that appears in the in-task UI (optional)"
+    }
+    
+  ]
+  \end{minted}
+  \label{fig:task-spec}
+  \caption{Spec for the tasks JSON file.}
+\end{figure}
+
+\begin{figure}[h]
+  \begin{minted}{javascript}
+  [
+  
+    {
+      id: "Sequence Identifier", 
+      tasks: ["list", "of", "task", "ids"]
+    }
+    
+  ]
+  \end{minted}
+  \label{fig:sequence-spec}
+  \caption{Spec for the sequence JSON file.}
+\end{figure}
+
 \subsection{Integrating Tasks Into the Application}
 
-To start a sequence,the developer can simply call a single method,
+To start a sequence, the developer simply calls a single method,
 specifying the ID of the sequence to be started.
 
 \begin{minted}{java}
@@ -152,7 +197,8 @@ previous one is finished.
 
 Triggering points that will complete tasks are achieved with another
 method call. For example if one task was completed by playing a
-song in the app, then the corresponding code might look like:
+song in a music app, then the corresponding code might look like
+the following:
 
 \begin{minted}{java}
   public void playSong(Song song) {
@@ -183,12 +229,12 @@ Beyond this, in each \verb|Activity|'s \verb|onResume| and
 \end{minted}
 
 This is so user interaction can be tracked, and the library's
-overlays can be shown above the foreground activity. Since applications
-are usually designed so that all activities inherit from a single
-base activity, this should not add much extra overhead for the
+overlays can be shown above the foreground activity. Since good application
+design encourages all activities to inherit from a single
+base activity, this should not add much extra implementation overhead for the
 developer. These two methods can optionally be given additional
 arguments as strings, as in the case of the search activity in
-section \ref{sec:developer-feedback}.
+Section \ref{sec:developer-feedback}.
 
 Finally, any additional navigation points can be tracked manually,
 by calling
@@ -197,7 +243,7 @@ by calling
   Gamify.trackNavPoint("Navpoint name");
 \end{minted}
 
-This is useful for tracking fragment transactions, or anything else
+This can be used to track fragment transactions, or anything else
 the tester deems relevant.
 
 \section{Developer Interface}
@@ -209,7 +255,7 @@ collected and centralised.
 
 To do this, the data is converted to a JSON format and automatically
 uploaded to a server running a CouchDB database. A map-reduce query
-in the database ca be used to extract the data in the form wanted
+in the database is used to extract the data in the form wanted
 for the graph display.
 
 This approach was chosen for its simplicity, ease of implementation,
@@ -221,9 +267,13 @@ cached, so queries remain fast.
 
 \subsection{Accessing Data}
 
-A javascript application on a web page queries the database and
+Another application was written to display the data gathered. It was
+decided this should take the form of a web page. Since I already
+had some experience with the language, coffeescript was chosen to
+implement the web app, its cleaner and more expressive syntax
+allowing faster development. The app queries the database and
 generates the navigation graph for each task. The query returns all
 the navigation paths recorded for a particular task, and the
 application handles processing backtracks, merging the paths and
-rendering, using The Dracula Graph library \cite{dracula-graph} to
+rendering, using the Dracula Graph library \cite{dracula-graph} to
 display the final graphs.

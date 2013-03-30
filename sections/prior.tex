@@ -64,10 +64,26 @@ development process for maximal performance \cite{tan2009web, archer2010web}.
 
 \subsection{Automated Methods}
 
-Tools such as USEFul \cite{dingli2011useful}
-\url{http://usabilitygeek.com/useful-a-framework-to-automate-website-usability-evaluation-part-2/}.
-Automatically compare websites to a database of usability guidelines. Optimised
-for desktop websites. No such service currently available for native mobile
-apps.
+As the principles and guidelines used when performing heuristic evaluation can
+be formalised, tools that attempt to automatically evaluate applications are
+available. The (desktop) web is the most active area for tools such as this,
+for example USEFul \cite{dingli2011useful}, a program which automatically 
+analyses websites, comparing them to a database of usability guidelines. Optimised
+for desktop websites.
 
-\subsection{A/B Testing}
+There are however no such services currently available for native Android apps,
+making this approach useless for our use case, although tools for this purpose
+could be developed in the future.
+
+\section{A/B Testing}
+
+One form of testing that is widely used, especially on the web, but equally
+viable in mobile applications if the deployment mechanism allows it, to improve
+usability. In this form of testing modifications are made to the interface
+received by a random proportion of users, and success rate of a metric is
+compared between the two versions. If the change gives a positive effect, then
+it is incorporated into the version sent to all users. A/B testing is most effective
+when the application is being used by a large number of users, such as a late
+beta phase or when it is in production. It's not so suitable for the phases
+of development before or during user testing or heuristic evaluation, and is
+usually used to refine interfaces as opposed to making any large sweeping changes.

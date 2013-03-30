@@ -68,7 +68,7 @@ sites, finding it to be an effective tool for quickly and easily identifying
 some problem areas.
 
 Analytics are also widely used in mobile apps in a similar manner to websites.
-These services are typically used to measure specifics about the userbase of
+These services are typically used to measure specifics about the user-base of
 the application, yielding useful data such as user count, frequency of use and
 user retention, as well as estimates of their geographic distribution and
 average age/gender. Most services also allow the developer to measure feature
@@ -91,6 +91,27 @@ be measured. If a particular stage of the process has a high dropout rate, then
 that stage can be evaluated for usability problems.
 
 \section{Proposed Solution}
+
+\subsection{Initial Design}
+
+Early designs and implementations focused on the gamification of the application
+being tested. The game encouraged the user to gather ``eggs'', or ``achievements''
+by navigating to areas of the interface and using features, the idea being that
+the eggs that few people managed to gather may reside in areas with poor usability.
+If the user could see which achievements had been gathered, or how many eggs
+they had collected out of the total, they would be encouraged to continue the
+game, furthering the testing.
+Since the project also aimed to gather other useful data about the specific
+interactions which were problematic, it became clear that linking navigation
+data to the collection of the eggs would be difficult due to similar reasons
+to analytics, where the intent behind each user decision is not available.
+The focus of the project moved to investigating ways of effectively gathering
+this information, and although the tasks in the end result closely resemble
+the achievements used initially, the project moved to a scenario where the
+participant would complete the testing in a single short sitting, as opposed
+to a lengthy game where the user needs an incentive to stay engaged.
+
+\subsection{Final Solution}
 
 While analytics services can gather large amounts of data from the interaction
 of users with an application, the lack of structure can make it difficult to
