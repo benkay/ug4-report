@@ -65,8 +65,8 @@ and inserts it into a container provided by the current window.
 At the root of the hierarchy is the decor view, which holds this
 container along with other interface elements such as the action
 bar. This entire hierarchy can be inspected with the HierarchyViewer
-application that ships with the Android SDK, as shown in Figure
-\ref{fig:view-hierarchy}.
+application that ships with the Android SDK, as shown in 
+Figure~\ref{fig:view-hierarchy}.
 
 \begin{figure}[h]
   \centering
@@ -81,7 +81,7 @@ application that ships with the Android SDK, as shown in Figure
 By obtaining a reference to the decor view using 
 \verb/Activity.getWindow().getDecorView()/ the library's UI can
 be either overlaid, or inserted into the top of the LinearLayout
-shown beneath the DecorView in Figure \ref{fig:view-hierarchy}.
+shown beneath the DecorView in Figure~\ref{fig:view-hierarchy}.
 
 \subsection{Keeping State}
 
@@ -143,7 +143,7 @@ They define the tasks that are available to perform, and what order
 they will be performed in.
 Each task has an id, title, description, and optional instruction
 that appears at the top of the screen during a task, and defaults
-to the title. The full specification can be seen in figure \ref{fig:task-spec}.
+to the title. The full specification can be seen in Figure~\ref{fig:task-spec}.
 The sequences file defines groups of tasks, and which
 order they will be run in. It also specifies whether to reset the
 user's position in the application hierarchy after a task, or
@@ -234,7 +234,7 @@ design encourages all activities to inherit from a single
 base activity, this should not add much extra implementation overhead for the
 developer. These two methods can optionally be given additional
 arguments as strings, as in the case of the search activity in
-Section \ref{sec:developer-feedback}.
+Section~\ref{sec:developer-feedback}.
 
 Finally, any additional navigation points can be tracked manually,
 by calling

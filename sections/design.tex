@@ -41,7 +41,7 @@ the library.
 
 \subsection{In-task UI}
 
-\emph{Figure \ref{fig:initial-overlay}} also shows how the early version of the in-task UI was an overlay over the application interface. While this was semi-transparent, it still had a tendency to obscure important controls, making it harder to use the application. This was refined after the initial evaluation so it no longer obscures content while still displaying important information about the task. The final UI can be seen in \emph{Figure \ref{fig:final-task-overlay}}. While placing an extra piece of interface at the top of the screen affects the height available to the application, the space taken up is designed to be as small as possible, and android apps must adapt to different screen sizes anyway. This design also facilitates controls being placed in the in-task UI, here used for an ``Abandon'' button.
+\emph{Figure~\ref{fig:initial-overlay}} also shows how the early version of the in-task UI was an overlay over the application interface. While this was semi-transparent, it still had a tendency to obscure important controls, making it harder to use the application. This was refined after the initial evaluation so it no longer obscures content while still displaying important information about the task. The final UI can be seen in \emph{Figure~\ref{fig:final-task-overlay}}. While placing an extra piece of interface at the top of the screen affects the height available to the application, the space taken up is designed to be as small as possible, and android apps must adapt to different screen sizes anyway. This design also facilitates controls being placed in the in-task UI, here used for an ``Abandon'' button.
 
 \begin{figure}[ht]
   \centering
@@ -94,7 +94,8 @@ point for capturing navigation, so each new Activity created is automatically ad
 the developer can choose to include Fragment changes, and any other navigation event that they deem important to 
 the data that will be collected. Extra information can be passed along with each point, useful for situations
 where the same screen might be used to display different sets of data, for example on a search screen the
-developer might want to include the search query used. A simple navigation path is shown in Figure \ref{fig:task-navigation}.
+developer might want to include the search query used. A simple navigation path is 
+shown in Figure~\ref{fig:task-navigation}.
 
 \begin{figure}[h]
  \centering
@@ -103,22 +104,22 @@ developer might want to include the search query used. A simple navigation path 
  \label{fig:task-navigation-tree}
 \end{figure}
 
-Once the navigation path data has been captured from the completion of a task from a number of participants, the paths are merged to create a navigation graph, as shown in Figure \ref{fig:task-navigation-tree}. Each path from one node to the next shows the percentage of participants who took that path, and the most
+Once the navigation path data has been captured from the completion of a task from a number of participants, the paths are merged to create a navigation graph, as shown in Figure~\ref{fig:task-navigation-tree}. Each path from one node to the next shows the percentage of participants who took that path, and the most
 common paths from the start screen to either completing or abandoning the task can be seen.
 
 An issue with this approach immediately showed during early evaluation of the system. When participants were unsure of how to proceed, they would often try many different options, quickly abandoning them and returning to the previous screen when it became clear the action they took was not the correct one.
 After a few users doing this the navigation tree became particularly messy and unreadable 
-(Figure \ref{fig:task-navigation-mess}).
+(Figure~\ref{fig:task-navigation-mess}).
 
 \begin{figure}[h]
  \centering
  \includegraphics[width=\textwidth]{images/messy-graph}
- \caption{Messy graphs produced when when participants backtrack.}
+ \caption{Messy graphs produced when participants backtrack.}
  \label{fig:task-navigation-mess}
 \end{figure}
 
 A simple fix was to not include part of the path in the graph when the user immediately returns
-to the previous point (Figure \ref{fig:task-navigation-mess-fixed}). This information is still important to indicate usability problems, so the average number of these ``backtracks'', if any, is shown below each node in the graph indicating potential usability problem areas at a glance.
+to the previous point (Figure~\ref{fig:task-navigation-mess-fixed}). This information is still important to indicate usability problems, so the average number of these ``backtracks'', if any, is shown below each node in the graph indicating potential usability problem areas at a glance.
 
 \begin{figure}[h]
  \centering
