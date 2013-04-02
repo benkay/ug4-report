@@ -20,7 +20,7 @@ JSON files given as arguments in the setup of the library.
 The effort required to finish the integration will depend on the
 architecture of the application being tested, and the level of
 detail the developer wants the library to record. In the ideal case
-it can take as little as four \todo{Make sure this is always correct}
+it can take as little as four
 lines of code, plus one statement for each of the defined tasks at
 the point where they should be completed. For some apps and apps
 that make use of fragments it may take more work, but in few cases
@@ -35,22 +35,29 @@ compared to the cost of having to write unit and integration tests,
 and in a similar manner to these it hopefully pays off in the long
 run.
 
-\subsection{Think of a title}
+\subsection{Testing Integration}
 
 As a small and unscientific test of the ease of integration into a
 new application, the library was integrated into an updated version
 of the application used for development, reusing the same tasks
 \ref{fig:updated-application}. In the interim between the version
 frozen for development and the latest version, the architecture of
-the code was refactored significantly, as has much of the user
+the code was refactored significantly, as has some of the user
 interface. Additionally, whereas the old application used a separate
 activity for each screen, the latest makes use of a single activity
 and swaps fragments between screens.
 
-\todo{How much effort was this?}
+Despite this, the integration approximately 30 minutes, including the time taken
+to download and add the library to the project in the IDE. The manual
+navpoint adding functionality was used to log the fragment changes. Additionally,
+logging opening and closing the sliding menu which can also be seen in
+the figure was achieved with the same function call.
 
-\begin{figure}
- \missingfigure{Updated application} \label{fig:updated-application}
+\begin{figure}[h]
+  \centering 
+  \includegraphics[width=0.5\textwidth]{images/updated-application}
+  \caption{The testing running in the updated version of the application.}
+  \label{fig:updated-application}
 \end{figure}
 
 \section{Ease of Testing}
@@ -187,8 +194,6 @@ with some users immediately searching for the song despite the instructions.
 
 \section{Future Work}
 
-\todo{Redo below into enhancements for library and enhancements to the results}
-
 \subsection{Library Enhancements}
 
 Depending on the task and the application being tested, the user 
@@ -252,13 +257,7 @@ be used with both traditional in-person testing and crowdsourced testing.
 
 \subsection{Combination With Other Tests}
 
-Due to the crowdsourced nature of the system, and the fact that no member of the
-development team will be present during the testing, the ``think aloud'' aspect
-of traditional testing will be missing. It would, of course, be possible to
-record the subject speaking as they navigate the application, but it would not
-be feasible to collect and aggregate that data automatically from many
-participants. Otherwise, the system will incorporate the same ideas as
-traditional usability testing.
-
-\todo{Combining with A/B testing might be interesting.}
-\todo{Gamification driven design - task is your user story?}
+The library could be combined with an A/B testing library, and participants
+given slight variations of parts of the interface. Using this combination, 
+when issues are detected then the performance of different interface fixes
+could be tested, comparing the performance of each to each other and the original.

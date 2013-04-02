@@ -11,9 +11,15 @@ performed by experts to be effective, and can still be costly.  In any case,
 performing just one from of testing is likely to leave some usability issues
 unfound.
 
-Because of these obstacles, usability testing may not be performed often or
-even at all during the development of a mobile application, causing usability
-issues in the user interface to go undetected.
+Other forms of testing are usually tightly integrated into the software development
+cycle, with feedback available immediately and continuously throughout the process.
+These obstacles, however, prevent usability testing being treated in the same manner,
+and may not be performed often or
+even at all during the development an application. The relative immaturity of the mobile
+ecosystem makes matters worse, with many of the tools and experience from web and
+desktop development unavailable to Android developers. The result in usability
+issues in the user interface that go undetected by the point an application is
+released to users, and some that remain long after that.
 
 \section{Background to Solution}
 
@@ -111,7 +117,7 @@ the achievements used initially, the project moved to a scenario where the
 participant would complete the testing in a single short sitting, as opposed
 to a lengthy game where the user needs an incentive to stay engaged.
 
-\subsection{Final Solution}
+\subsection{Focus On Data}
 
 While analytics services can gather large amounts of data from the interaction
 of users with an application, the lack of structure can make it difficult to
@@ -133,12 +139,13 @@ that can be given to people unfamiliar with an application, and to easily
 gather data which will identify potential problem areas with respect to
 usability.
 
-The project takes the form of a framework that can be quickly integrated into
-any mobile application, with as little modification to the application's code
-as possible. The developer defines tasks for the user to complete with defined
-starting points in the app to make aggregation of data easier. Users can then
-attempt to complete the tasks independently without there needing to be
-a member of the development team present, as is usual with usability testing,
-and the results automatically uploaded for the developer to view at a later
-time. By aggregating the data from many tests common problem areas should be
-able to be identified and investigated further.
+The goal of this project is to produce a library that can be quickly integrated into
+any Android app, with as little modification to the application's code
+as possible. The library should enable users to help test the interface
+of the application without any intervention or need for the developer to
+be present. It should also gather data and present it to the developer,
+with the aim of highlighting good and poor usability areas in the user interface
+so they can be easily identified and investigated further.
+
+To be successful, the library should be easy and quick to integrate, and
+provide results that can be easily interpreted to achieve the above goals.
