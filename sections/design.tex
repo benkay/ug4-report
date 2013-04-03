@@ -2,7 +2,7 @@
 
 There are a few core problems to solve.
 One is making the participant use the application in the structured way needed to
-gather relevant data. The second is to find a way to enable the developer to integrate
+gather relevant data. The second is to find a way of enableing the developer to integrate
 the testing into the application and capture relevant information. The data then needs
 to be collected, processed, and presented in a way that makes it easy to spot
 problem areas in the interface.
@@ -22,8 +22,8 @@ In an attempt to keep the user being tested engaged, and thus increasing the lik
 they would be assigned a number of points relative to how quickly they did it.
 Early evaluation of this prototype highlighted a couple of concerns with this approach. Firstly, showing the user how
 long they are taking and encouraging them to complete the task as quickly as
-possible could cause the participant to focus on the on screen timer instead of other elements of the interface, resulting in behaviour that did not necessarily match real world usage.
-Additionally, the point system did not seem to work as hoped, missing crucial aspects that usually make point systems encouraging.  Since the ``game'' was not really repeatable, and points were not ranked against any other player or used for any other purpose, participants did not see the purpose in gathering them. 
+possible could cause the participant to focus on the on-screen timer instead of other elements of the interface, resulting in behaviour that did not necessarily match real world usage.
+Additionally, the point system did not seem to work as hoped, missing crucial aspects that usually make point systems encouraging.  Since the ``game'' was not really repeatable, and points were not ranked against any other player or used for any other purpose, participants did have an incentive to gather them. 
 
 \begin{figure}[ht!]
   \centering 
@@ -41,7 +41,7 @@ the library.
 
 \subsection{In-task UI}
 
-\emph{Figure~\ref{fig:initial-overlay}} also shows how the early version of the in-task UI was an overlay over the application interface. While this was semi-transparent, it still had a tendency to obscure important controls, making it harder to use the application. This was refined after the initial evaluation so it no longer obscures content while still displaying important information about the task. The final UI can be seen in \emph{Figure~\ref{fig:final-task-overlay}}. While placing an extra piece of interface at the top of the screen affects the height available to the application, the space taken up is designed to be as small as possible, and android apps must adapt to different screen sizes anyway. This design also facilitates controls being placed in the in-task UI, here used for an ``Abandon'' button.
+Figure~\ref{fig:initial-overlay} also shows how the early version of the in-task UI was an overlay over the application interface. While this was semi-transparent, it still had a tendency to obscure important controls, making it harder to use the application. This was refined after the initial evaluation so it no longer obscures content while still displaying important information about the task. The final UI can be seen in Figure~\ref{fig:final-task-overlay}. While placing an extra piece of interface at the top of the screen affects the height available to the application, the space taken up is designed to be as small as possible, and android apps must adapt to different screen sizes anyway. This design also facilitates controls being placed in the in-task UI, here used for an ``Abandon'' button.
 
 \begin{figure}[ht]
   \centering
@@ -59,7 +59,7 @@ is usually the case
 where the developer could benefit most from the feedback, so the library must highlight areas
 where this scenario happens, and let the testing continue. To
 enable this, as part of the overlay that appears while performing a task a
-button allows the participant to abandon the current task at any point. This allows them to easily continue the testing, and if many people abandon the same task provides a quick indication of tasks that may be especially difficult to complete.
+button allows the participant to abandon the current task at any point. This lets them easily continue the testing, and if many people abandon the same task it provides a quick indication of tasks that may be especially difficult to complete.
 
 \section{Developer feedback}
 \label{sec:developer-feedback}

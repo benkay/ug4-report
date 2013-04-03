@@ -2,10 +2,10 @@
 
 An Android app had to be chosen to test and used to develop the initial
 implementation. The app chosen was GSRemote, an app that I have
-been developing as a hobby, since it is moderately complex, and I already
-have a good understanding of the source code which make integration easier.
+been developing as a hobby. It is moderately complex, and I already
+have a good understanding of the source code which made integration easier.
 The app is a remote control for the web music service ``Grooveshark'',
-so functions similarly to a normal music player app except it controls
+so functions similarly to a normal music player app except it instead controls
 a player running on the user's desktop or laptop.
 Despite this, the library should be generic enough to easily integrate 
 into any Android app.
@@ -23,7 +23,7 @@ project, or by packaging the dependency as an Android Library
 Project \cite{android-library}. A library project is similar to
 an ordinary Android project, with the exception that it cannot
 be run as a standalone application. This enables it to leverage
- the full functionality of the android
+the full functionality of the Android
 platform - it can make use of its own assets and layouts and manage
 its own dependencies - while being self contained and portable
 between projects. The only extra considerations that have to be
@@ -58,7 +58,7 @@ how android draws views.
 \subsection{Injecting Views}
 
 Interface elements on android are known as ``views'', since they
-extend the View class, and are organised into a view hierarchy.
+extend the View class, and are organised into a hierarchy.
 When an Activity is created, it also creates its view hierarchy
 (by inflating a layout xml file or creating it programmatically)
 and inserts it into a container provided by the current window.
@@ -103,7 +103,7 @@ code.
 The testing functionality must be easy to remove/disable if the
 developer does not want it present in the released version. To know
 when to begin and end tasks, inject the library's user interface
-in the app, and gather data about the participant's performance,
+in the app, and gather data about the participant's interaction,
 however, some integration with the application's code is needed.
 To keep this to a minimum, all interaction with the library in
 performed using the static \verb/Gamify/ class. This allows for
@@ -127,7 +127,7 @@ in either the \verb|Application| or initial \verb|Activity|'s
 
 \begin{minted}{java}
   Gamify.init(this /* Context */, true /* Enabled */,
-      "challenges.json", "sequences.json");
+      "tasks.json", "sequences.json");
 \end{minted}
 
 \subsection{Defining tasks}
@@ -137,7 +137,7 @@ them to the library. Ideally this should be done without having
 to modify any part of the library's code or assets. JSON was
 chosen as the format to define tasks, since it is easy to write
 and well known among developers.
-The ``challenges.json'' and ``sequences.json'' files in the code
+The ``tasks.json'' and ``sequences.json'' files in the code
 above must be included in the application's \verb+assets/+ directory.
 They define the tasks that are available to perform, and what order
 they will be performed in.
@@ -145,9 +145,7 @@ Each task has an id, title, description, and optional instruction
 that appears at the top of the screen during a task, and defaults
 to the title. The full specification can be seen in Figure~\ref{fig:task-spec}.
 The sequences file defines groups of tasks, and which
-order they will be run in. It also specifies whether to reset the
-user's position in the application hierarchy after a task, or
-continue from where they finished the previous task.
+order they will be run in.
 
 \begin{figure}[h]
   \begin{minted}{javascript}

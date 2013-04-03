@@ -5,19 +5,19 @@ cost, expertise required and the lack of effective automation.  If performing
 think aloud testing, participants must be found and then travel to the site of
 the testing (or the developer travel to them), and are usually paid for their
 time. While there are services that take care of much of the process on behalf
-of the developer, the process tends to be costly, especially if it is done
+of the developer, the process still tends to be costly, especially if it is done
 often.  Other types of usability testing such as heuristic evaluation must be
-performed by experts to be effective, and can still be costly.  In any case,
-performing just one from of testing is likely to leave some usability issues
+performed by experts to be effective.  In any case,
+performing just one from of usability testing is likely to leave some issues
 unfound.
 
-Other forms of testing are usually tightly integrated into the software development
+Other types of testing are usually tightly integrated into the software development
 cycle, with feedback available immediately and continuously throughout the process.
 These obstacles, however, prevent usability testing being treated in the same manner,
 and may not be performed often or
 even at all during the development an application. The relative immaturity of the mobile
 ecosystem makes matters worse, with many of the tools and experience from web and
-desktop development unavailable to Android developers. The result in usability
+desktop development unavailable to Android developers. The result is usability
 issues in the user interface that go undetected by the point an application is
 released to users, and some that remain long after that.
 
@@ -37,17 +37,17 @@ images and help search results, \emph{reCAPTCHA}, which leverages the popular
 digitise books, and most recently \emph{Duolingo}, a service which aims to
 teach people new languages while translating web pages.
 
-Modern software development is moving to a more iterative process with
-a ``release early, release often'' attitude. This trend is particularly visible
-in the mobile space, where the major platforms' app stores provide an
-integrated and efficient delivery mechanism for updates. Combined with modern
-analytics packages and other user feedback mechanisms such as support emails
-and reviews this gives developers an opportunity to test their applications'
-interface and gradually refine the user experience after release.
-
-Indeed when using analytics in an application this already seems like a form of
-crowdsourcing - the entire userbase of the application is potentially involved
-in the application's improvement. 
+%Modern software development is moving to a more iterative process with
+%a ``release early, release often'' attitude. This trend is particularly visible
+%in the mobile space, where the major platforms' app stores provide an
+%integrated and efficient delivery mechanism for updates. Combined with modern
+%analytics packages and other user feedback mechanisms such as support emails
+%and reviews this gives developers an opportunity to test their applications'
+%interface and gradually refine the user experience after release.
+%
+%Indeed when using analytics in an application this already seems like a form of
+%crowdsourcing - the entire userbase of the application is potentially involved
+%in the application's improvement. 
 
 \subsection{Gamification}
 
@@ -62,6 +62,12 @@ around 2010 \cite{gamification-trends}. It commonly involves adding rewards
 such as points or other forms of recognition for completing tasks or challenges
 within the environment.
 
+The gamification gives the user an incentive to continue using a service or
+piece of software, turning any work they may be doing into a form of 
+entertainment. For this reason it is commonly used in conjunction with
+crowdsourcing, keeping users as participants long after they might otherwise
+have quit.
+
 \subsection{Analytics}
 
 Analytics services have been available since the early days of the web,
@@ -73,17 +79,17 @@ use of metrics in Google Analytics to evaluate the usability of e-commerce
 sites, finding it to be an effective tool for quickly and easily identifying
 some problem areas.
 
-Analytics are also widely used in mobile apps in a similar manner to websites.
-These services are typically used to measure specifics about the user-base of
+Analytics are also widely used in mobile apps.
+These services typically measure specifics about the user-base of
 the application, yielding useful data such as user count, frequency of use and
 user retention, as well as estimates of their geographic distribution and
 average age/gender. Most services also allow the developer to measure feature
-usage by measuring predefined ``events'' triggered by a user when they perform
-an action in the application. For example in a music application, the developer
+usage by integrating predefined ``events'', which get triggered by a user when they perform
+an action in the application. For example in a music app, the developer
 might add an event for the play button. Whenever the user then presses play, an
 event is sent to the analytics service and the developer can view statistics
 showing, say, the number of people who pressed play in a single day or the
-proportion of total users that use the feature. By incorporating these events
+proportion of total users that use that feature. By incorporating these events
 throughout the application, the developer can get an idea of which features are
 heavily used, and what functionality is exerted more rarely. The obvious
 limitation of this approach is that it is difficult to discern the intent of
@@ -91,12 +97,19 @@ the user; in most scenarios, the developer cannot distinguish between
 functionality that is not used because users have no desire to use it, and
 functionality that is not used because it is not obvious, or has poor
 usability. The exceptions here are use cases that where a specific workflow is
-involved, for example a signup form or purchase. In this case, where events can
+involved, for example a signup form or purchase. In this case, events can
 be placed at each point of the process and the dropout rate at each stage can
 be measured. If a particular stage of the process has a high dropout rate, then
 that stage can be evaluated for usability problems.
 
 \section{Proposed Solution}
+
+The idea behind the project is to leverage crowdsourcing and related techniques
+provide a new option for testing the interface of an Android app. While it
+would be unlikely to (and the project does not aim to) completely replace
+normal user testing, a cheaper and quicker method could be performed more often
+(or even continuously), driving down the cost of producing a more polished app.
+
 
 \subsection{Initial Design}
 
@@ -126,7 +139,7 @@ when the data is gathered.  Without knowing this information, it is hard to
 discern areas of the interface with poor usability versus areas which are
 simply less popular.
 
-Tasks which always have a specific structured workflow, such as a checkout
+As mentioned, tasks which always have a specific structured workflow, such as a checkout
 process, are easier to analyse with existing analytics services, as user intent
 is clear. This is similar to the use of specific tasks given to the participant
 in user testing. If participants are given specific tasks to perform, and their
@@ -134,8 +147,8 @@ interaction with the app logged in a manner similar to analytics, the same
 usefulness of analytics can be extended to other areas of the app.
 
 By combining some of the methodologies traditionally used in usability testing
-with analytics and crowdsourcing, the project aims to provide an environment
-that can be given to people unfamiliar with an application, and to easily
+with analytics and crowdsourcing, we should be able to provide an environment
+that can be given to people unfamiliar with an application, and easily
 gather data which will identify potential problem areas with respect to
 usability.
 
